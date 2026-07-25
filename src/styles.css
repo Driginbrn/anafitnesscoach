@@ -1,0 +1,131 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Ana — Mentorstvo za zdravlje i mršavljenje
+ * Design tokens: warm brown text, sage green primary, terracotta accent,
+ * soft cream background. Editorial wellness aesthetic.
+ */
+
+@theme inline {
+  --font-display: "Fraunces", Georgia, serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 8px);
+  --radius-2xl: calc(var(--radius) + 16px);
+  --radius-3xl: calc(var(--radius) + 28px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-brand-brown: var(--brand-brown);
+  --color-brand-brown-soft: var(--brand-brown-soft);
+  --color-brand-green: var(--brand-green);
+  --color-brand-green-soft: var(--brand-green-soft);
+  --color-brand-terracotta: var(--brand-terracotta);
+  --color-brand-cream: var(--brand-cream);
+  --color-brand-cream-deep: var(--brand-cream-deep);
+
+  --shadow-soft: 0 1px 2px oklch(0.25 0.03 60 / 0.04), 0 8px 24px oklch(0.25 0.03 60 / 0.06);
+  --shadow-elegant: 0 2px 4px oklch(0.25 0.03 60 / 0.05), 0 20px 50px -12px oklch(0.25 0.03 60 / 0.12);
+}
+
+:root {
+  --radius: 1rem;
+
+  /* Brand palette (from brief) — expressed in oklch */
+  --brand-brown: oklch(0.28 0.035 55);        /* #3D2B1F */
+  --brand-brown-soft: oklch(0.42 0.03 55);
+  --brand-green: oklch(0.63 0.045 175);       /* #6A9D90 */
+  --brand-green-soft: oklch(0.88 0.025 175);
+  --brand-terracotta: oklch(0.7 0.08 55);     /* #C4956A */
+  --brand-cream: oklch(0.955 0.012 80);       /* #F1EDE7 */
+  --brand-cream-deep: oklch(0.92 0.015 78);
+
+  --background: var(--brand-cream);
+  --foreground: var(--brand-brown);
+  --card: oklch(0.985 0.006 80);
+  --card-foreground: var(--brand-brown);
+  --popover: oklch(0.985 0.006 80);
+  --popover-foreground: var(--brand-brown);
+  --primary: var(--brand-green);
+  --primary-foreground: oklch(0.985 0.006 80);
+  --secondary: var(--brand-cream-deep);
+  --secondary-foreground: var(--brand-brown);
+  --muted: var(--brand-cream-deep);
+  --muted-foreground: oklch(0.5 0.03 55);
+  --accent: var(--brand-terracotta);
+  --accent-foreground: oklch(0.99 0.006 80);
+  --destructive: oklch(0.55 0.18 27);
+  --destructive-foreground: oklch(0.99 0.006 80);
+  --border: oklch(0.88 0.015 70);
+  --input: oklch(0.88 0.015 70);
+  --ring: var(--brand-green);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+  }
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+}
+
+@utility fade-in-up {
+  animation: fadeInUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
