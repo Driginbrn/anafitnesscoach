@@ -16,8 +16,8 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-import heroImg from "@/assets/hero-mentor.jpg";
-import anaImg from "@/assets/ana-portrait.jpg";
+import heroImg from "@/assets/ana-hero.png";
+import anaImg from "@/assets/ana-o-meni.png";
 import lifestyle1 from "@/assets/lifestyle-1.jpg";
 import lifestyle2 from "@/assets/lifestyle-2.jpg";
 
@@ -107,15 +107,17 @@ function Nav() {
         <a href="#" className="flex items-center gap-2 text-brand-brown">
           <span className="font-display text-2xl tracking-tight">Ana — Fitness Coach</span>
         </a>
-        <nav className="hidden md:flex items-center gap-9 text-sm text-brand-brown/80">
-          <a href="#ana" className="hover:text-brand-green transition">Upoznaj Anu</a>
-        </nav>
-        <a
-          href="#prijava"
-          className="hidden md:inline-flex items-center gap-2 rounded-full border border-brand-brown/25 px-5 py-2 text-sm text-brand-brown hover:bg-brand-brown hover:text-primary-foreground transition"
-        >
-          Prijavi se
-        </a>
+        <div className="hidden md:flex items-center gap-8">
+          <nav className="flex items-center gap-8 text-sm text-brand-brown/80">
+            <a href="#ana" className="hover:text-brand-green transition">O meni</a>
+          </nav>
+          <a
+            href="#prijava"
+            className="inline-flex items-center gap-2 rounded-full border border-brand-brown/25 px-5 py-2 text-sm text-brand-brown hover:bg-brand-brown hover:text-primary-foreground transition"
+          >
+            Prijavi se
+          </a>
+        </div>
       </Container>
     </header>
   );
@@ -149,10 +151,10 @@ function Hero() {
             <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl bg-brand-cream-deep shadow-elegant">
               <img
                 src={heroImg}
-                alt="Mirna, elegantna scena — jutarnji ritual"
-                width={1200}
-                height={1400}
-                className="h-full w-full object-cover"
+                alt="Ana — mentorka za zdravlje i mršavljenje"
+                width={1080}
+                height={1350}
+                className="h-full w-full object-contain object-bottom"
               />
             </div>
           </div>
@@ -307,19 +309,20 @@ function AboutAna() {
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
           <div className="lg:col-span-5">
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl shadow-elegant">
+            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl bg-brand-cream shadow-elegant">
               <img
                 src={anaImg}
                 alt="Ana — mentorka za zdravlje i mršavljenje"
                 loading="lazy"
-                width={1200}
-                height={1500}
-                className="h-full w-full object-cover"
+                width={843}
+                height={1110}
+                className="h-full w-full object-contain object-bottom"
               />
             </div>
           </div>
           <div className="lg:col-span-7">
-            <h2 className="text-4xl md:text-5xl text-brand-brown">
+            <p className="text-xs uppercase tracking-[0.22em] text-brand-brown/60">O meni</p>
+            <h2 className="mt-5 text-4xl md:text-5xl text-brand-brown">
               Verujem da <em className="italic text-brand-green">promena</em> počinje iz razumevanja, ne iz kazne.
             </h2>
             <div className="mt-8 space-y-5 text-muted-foreground leading-relaxed">
