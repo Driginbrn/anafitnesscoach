@@ -176,11 +176,6 @@ function Hero() {
 }
 
 function OnlineMentorstvo() {
-  const items = [
-    { text: "Šta obuhvata mentorstvo?", href: "#sta-obuhvata" },
-    { text: "Kako funkcioniše?", href: "#kako-funkcionise" },
-    { text: "Za koga je mentorstvo i za koga nije?", href: "#za-koga" },
-  ];
   return (
     <section id="mentorstvo" className="py-24 md:py-32">
       <Container>
@@ -189,13 +184,6 @@ function OnlineMentorstvo() {
           title="ONLINE MENTORSTVO"
           intro="Individualni pristup sa proverenim sistemima koji daju rezultate"
         />
-        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {items.map(({ text, href }) => (
-            <a key={text} href={href} className={`${cardBase} flex items-center`}>
-              <span className={cardText}>{text}</span>
-            </a>
-          ))}
-        </div>
       </Container>
     </section>
   );
