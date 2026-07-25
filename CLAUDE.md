@@ -81,19 +81,40 @@ redova deluje zbijeno, popuštati `leading`, ne smanjivati font.
 
 Sve sekcije su trenutno u `src/routes/index.tsx`:
 
-Nav → Hero → Zašto mentorstvo → Šta dobijaš → Da li je za tebe → O Ani →
-Forma za vodič → Finalni CTA → Footer
+Nav → Hero → Online mentorstvo → Šta obuhvata → Kako funkcioniše → Za koga →
+O meni → Forma za vodič → Finalni CTA → Footer
 
 Interne komponente (`Container`, `SectionHeading`, `Button`) su definisane u istom fajlu.
-Sekcije koriste `id` za anchor navigaciju: `#mentorstvo`, `#ana`, `#vodic`, `#prijava`.
+Sekcije koriste `id` za anchor navigaciju: `#mentorstvo`, `#sta-obuhvata`,
+`#kako-funkcionise`, `#za-koga`, `#ana`, `#vodic`, `#prijava`. Tri kartice u sekciji
+„Online mentorstvo" su linkovi na naredne tri sekcije — ako se neka preimenuje ili
+ukloni, ažurirati i njih.
+
+### Kartice
+
+Zajednički izgled je u konstantama `cardBase` i `cardText` na vrhu fajla — koristiti njih,
+ne prepisivati klase po sekcijama. Kartice su bez ikonica, samo tekst.
+
+Hover oboji **ceo boks** u `brand-green` i tekst u belo, uz postojeći lift i senku.
+Tailwind to pakuje u `@media (hover: hover)`, pa na dodirnim ekranima efekta nema —
+to je namerno, ne oslanjati logiku na njega.
+
+Naslovi sekcija su pisani verzalom. Verzal traži **pozitivan** razmak između slova
+(`caps` prop na `SectionHeading`, odnosno `tracking-[0.02em]`) — bez toga se slova slepe
+jer je osnovni `letter-spacing` za naslove negativan.
 
 ## Poznata stanja / TODO
 
 - Forma za besplatan vodič samo postavlja lokalni state — **nema pravog slanja**.
 - CTA "Prijavi se" je `mailto:` link.
-- `src/assets/transformation-1.jpg` i `transformation-2.jpg` se nigde ne koriste.
+- Sekcije „O meni", „Forma za vodič" i „Finalni CTA" još imaju zatečen Lovable copy —
+  čeka se novi tekst.
+- `src/assets/transformation-1.jpg`, `transformation-2.jpg`, `ana-portrait.jpg`,
+  `hero-mentor.jpg` i `lifestyle-*.jpg` — deo se više ne koristi.
+- `ana-cutout.png` je 421 KB; WebP bi to spustio na ~80 KB.
 - Placeholder kontakt: `zdravo@ana-mentorstvo.rs`, Instagram link vodi na `instagram.com`.
 - Nema sekcija: cene/paketi, testimonials, FAQ.
+- Nav ima samo jedan link („O meni") iako sada postoji šest sekcija sa sidrima.
 
 ## Lovable
 

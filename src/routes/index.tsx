@@ -1,20 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
-import {
-  HeartHandshake,
-  Sparkles,
-  CalendarCheck,
-  Utensils,
-  Dumbbell,
-  MessagesSquare,
-  PlayCircle,
-  Pill,
-  Check,
-  X,
-  Instagram,
-  Mail,
-  ArrowRight,
-} from "lucide-react";
+import { Check, X, Instagram, Mail, ArrowRight } from "lucide-react";
 
 import anaCutout from "@/assets/ana-cutout.png";
 import lifestyle1 from "@/assets/lifestyle-1.jpg";
@@ -56,20 +42,31 @@ function SectionHeading({
   title,
   intro,
   align = "left",
+  caps = false,
 }: {
   title: string;
   intro?: string;
   align?: "left" | "center";
+  /** Naslovi pisani verzalom traže pozitivan razmak — bez toga se slova slepe. */
+  caps?: boolean;
 }) {
   return (
     <div className={`max-w-2xl ${align === "center" ? "mx-auto text-center" : ""}`}>
-      <h2 className="text-4xl md:text-5xl">{title}</h2>
+      <h2 className={`text-4xl md:text-5xl ${caps ? "tracking-[0.02em]" : ""}`}>{title}</h2>
       {intro && (
         <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">{intro}</p>
       )}
     </div>
   );
 }
+
+/* Zajednički izgled boksa. Hover oboji ceo boks u brand-green — isti onaj
+   zeleni ton koji je ranije stajao statično na prvoj kartici. */
+const cardBase =
+  "group rounded-3xl border border-border bg-card p-7 md:p-8 transition-all duration-500 hover:-translate-y-1 hover:shadow-elegant hover:bg-brand-green hover:border-brand-green";
+
+const cardText =
+  "font-display text-xl leading-snug text-brand-brown transition-colors duration-500 group-hover:text-white";
 
 type BtnProps = {
   children: React.ReactNode;
@@ -178,45 +175,25 @@ function Hero() {
   );
 }
 
-function WhyMentorship() {
+function OnlineMentorstvo() {
   const items = [
-    {
-      icon: HeartHandshake,
-      title: "Individualan pristup",
-      text: "Plan koji se prilagođava tebi — tvom telu, ritmu i životu, a ne obrnuto.",
-    },
-    {
-      icon: CalendarCheck,
-      title: "Nedeljno praćenje",
-      text: "Svake nedelje analiziramo napredak i prilagođavamo korake ka cilju.",
-    },
-    {
-      icon: Sparkles,
-      title: "Navike koje ostaju",
-      text: "Radimo na temeljima — hrani, snu, kretanju i odnosu sa sobom.",
-    },
-    {
-      icon: MessagesSquare,
-      title: "Stalna podrška",
-      text: "Nisi sama u procesu. Tu sam kad zapneš i kad slaviš svaki korak napred.",
-    },
+    { text: "Šta obuhvata mentorstvo?", href: "#sta-obuhvata" },
+    { text: "Kako funkcioniše?", href: "#kako-funkcionise" },
+    { text: "Za koga je mentorstvo i za koga nije?", href: "#za-koga" },
   ];
   return (
     <section id="mentorstvo" className="py-24 md:py-32">
       <Container>
-        <SectionHeading title="Zašto odabrati mentorstvo umesto dijete?" />
-        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {items.map(({ icon: Icon, title, text }) => (
-            <div
-              key={title}
-              className="group rounded-3xl border border-border bg-card p-7 transition-all duration-500 hover:-translate-y-1 hover:shadow-elegant"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-green-soft text-brand-green">
-                <Icon className="h-5 w-5" />
-              </div>
-              <h3 className="mt-6 text-xl text-brand-brown">{title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{text}</p>
-            </div>
+        <SectionHeading
+          caps
+          title="ONLINE MENTORSTVO"
+          intro="Individualni pristup sa proverenim sistemima koji daju rezultate"
+        />
+        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {items.map(({ text, href }) => (
+            <a key={text} href={href} className={`${cardBase} flex items-center`}>
+              <span className={cardText}>{text}</span>
+            </a>
           ))}
         </div>
       </Container>
@@ -224,63 +201,23 @@ function WhyMentorship() {
   );
 }
 
-function WhatYouGet() {
+function StaObuhvata() {
   const items = [
-    {
-      icon: Utensils,
-      title: "Individualni plan ishrane",
-      text: "Sastavljen po tvom telu, navikama i preferencijama.",
-    },
-    {
-      icon: Dumbbell,
-      title: "Individualni plan treninga",
-      text: "Kod kuće ili u teretani — prilagođeno tvom nivou.",
-    },
-    {
-      icon: CalendarCheck,
-      title: "Nedeljno praćenje",
-      text: "Redovna analiza i podešavanje strategije.",
-    },
-    {
-      icon: MessagesSquare,
-      title: "Podrška 7 dana u nedelji",
-      text: "Tu sam kada ti je potrebno usmerenje ili reč ohrabrenja.",
-    },
-    {
-      icon: PlayCircle,
-      title: "Video biblioteka vežbi",
-      text: "Jasna demonstracija svake vežbe iz plana.",
-    },
-    { icon: Pill, title: "Plan suplementacije", text: "Samo ono što ima smisla — bez suvišnog." },
+    "Individualni plan ishrane prilagođen tvojim potrebama",
+    "Individualan plan treninga prema tvojim ciljevima",
+    "Praćenje napretka na nedeljnom nivou i izmene",
+    "Moja podrška 7 dana u nedelji",
+    "Plan suplementacije",
+    "Video materijal sa pravilnim izvođenjem vežbi",
   ];
   return (
-    <section className="py-24 md:py-32">
+    <section id="sta-obuhvata" className="py-24 md:py-32 bg-brand-cream-deep/60">
       <Container>
-        <SectionHeading title="Sve što ti treba na jednom mestu." />
-
+        <SectionHeading caps title="ŠTA OBUHVATA MENTORSTVO?" />
         <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {items.map(({ icon: Icon, title, text }, i) => (
-            <div
-              key={title}
-              className={`rounded-3xl p-8 border border-border transition-all duration-500 hover:-translate-y-1 hover:shadow-elegant ${
-                i === 0 ? "bg-brand-green text-primary-foreground border-brand-green" : "bg-card"
-              }`}
-            >
-              <div
-                className={`flex h-12 w-12 items-center justify-center rounded-2xl ${
-                  i === 0 ? "bg-white/15 text-white" : "bg-brand-cream-deep text-brand-green"
-                }`}
-              >
-                <Icon className="h-5 w-5" />
-              </div>
-              <h3 className={`mt-6 text-xl ${i === 0 ? "text-white" : "text-brand-brown"}`}>
-                {title}
-              </h3>
-              <p
-                className={`mt-3 text-sm leading-relaxed ${i === 0 ? "text-white/85" : "text-muted-foreground"}`}
-              >
-                {text}
-              </p>
+          {items.map((text) => (
+            <div key={text} className={`${cardBase} flex items-center`}>
+              <span className={cardText}>{text}</span>
             </div>
           ))}
         </div>
@@ -289,27 +226,56 @@ function WhatYouGet() {
   );
 }
 
-function IsItForYou() {
+function KakoFunkcionise() {
+  const items = [
+    "Na početku saradnje popunjavaš upitnik na osnovu kog dobijam informacije i sastavljam plan ishrane i treninga",
+    "Plan pravim prema tvojim ciljevima, trenutnom stanju i mogućnostima",
+    "Na nedeljnom nivou mi šalješ izveštaj i pratim napredak",
+    "Na osnovu izveštaja pravim izmene u ishrani i treningu po potrebi",
+    "Sve se prilagođava tako da dobiješ maksimum",
+  ];
+  return (
+    <section id="kako-funkcionise" className="py-24 md:py-32">
+      <Container>
+        <SectionHeading caps title="KAKO FUNKCIONIŠE?" />
+        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {items.map((text) => (
+            <div key={text} className={`${cardBase} flex items-center`}>
+              <span className={cardText}>{text}</span>
+            </div>
+          ))}
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+function ZaKoga() {
   const forYou = [
-    "Umorna si od dijeta koje ne daju trajne rezultate",
-    "Želiš da naučiš kako da jedeš i živiš zdravo",
-    "Tražiš individualan pristup, a ne opšti plan",
-    "Spremna si na proces koji traje mesecima, ne danima",
-    "Želiš vođenje i podršku, ne još jedan PDF plan",
+    "Za žene koje jedu malo, a ne mršave",
+    "Za žene koje žele da poprave svoje zdravlje",
+    "Za žene koje žele da izgrade mišiće",
+    "Za žene koje žele proveren i siguran sistem bez lutanja i frustracija",
+    "Za žene koje žele da treniraju",
+    "Ako želiš vođenje i podršku, a ne jedan standardizovan plan",
+    "Ako ne želiš kupus dijete, već pravu hranu koja te drži sitom",
   ];
   const notForYou = [
-    "Tražiš brzu dijetu za dve nedelje",
-    "Nemaš vremena da se posvetiš procesu",
-    "Ne želiš da menjaš navike i način razmišljanja",
-    "Očekuješ rezultate bez rada i doslednosti",
+    "Za one koje ne žele da treniraju",
+    "Za one koje žele brze rezultate i čarobne pilule",
+    "Za one koje žele detokse, dijete i izgladnjivanje",
+    "Za one koje nisu spremne da promene svoje navike",
+    "Za one koje ne žele individualan pristup i neozbiljne su",
   ];
 
   return (
-    <section className="py-24 md:py-32 bg-brand-cream-deep/60">
+    <section id="za-koga" className="py-24 md:py-32 bg-brand-cream-deep/60">
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-6">
           <div className="rounded-3xl bg-card border border-border p-8 md:p-10">
-            <h3 className="text-3xl md:text-4xl text-brand-brown">Da li je mentorstvo za tebe?</h3>
+            <h3 className="text-3xl md:text-4xl tracking-[0.02em] text-brand-brown">
+              ZA KOGA JE MENTORSTVO?
+            </h3>
             <ul className="mt-8 space-y-4">
               {forYou.map((t) => (
                 <li key={t} className="flex items-start gap-3">
@@ -323,8 +289,8 @@ function IsItForYou() {
           </div>
 
           <div className="rounded-3xl bg-brand-brown text-primary-foreground p-8 md:p-10">
-            <h3 className="text-3xl md:text-4xl text-primary-foreground">
-              Kada mentorstvo nije pravi izbor?
+            <h3 className="text-3xl md:text-4xl tracking-[0.02em] text-primary-foreground">
+              ZA KOGA NIJE MENTORSTVO?
             </h3>
             <ul className="mt-8 space-y-4">
               {notForYou.map((t) => (
@@ -542,9 +508,10 @@ function Index() {
     <main className="bg-background text-foreground">
       <Nav />
       <Hero />
-      <WhyMentorship />
-      <WhatYouGet />
-      <IsItForYou />
+      <OnlineMentorstvo />
+      <StaObuhvata />
+      <KakoFunkcionise />
+      <ZaKoga />
       <AboutAna />
       <GuideForm />
       <FinalCTA />
