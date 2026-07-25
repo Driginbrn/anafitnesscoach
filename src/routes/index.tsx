@@ -1,6 +1,21 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type FormEvent } from "react";
-import { Check, X, Instagram, Mail, ArrowRight } from "lucide-react";
+import {
+  Utensils,
+  Trophy,
+  TrendingUp,
+  HeartHandshake,
+  Pill,
+  Video,
+  Hourglass,
+  Award,
+  Target,
+  Check,
+  X,
+  Instagram,
+  Mail,
+  ArrowRight,
+} from "lucide-react";
 
 import anaCutout from "@/assets/ana-cutout.png";
 import lifestyle1 from "@/assets/lifestyle-1.jpg";
@@ -60,18 +75,16 @@ function SectionHeading({
   );
 }
 
-/* Zajednički izgled boksa. Hover oboji ceo boks u brand-green — isti onaj
-   zeleni ton koji je ranije stajao statično na prvoj kartici. */
-const cardBase =
-  "group rounded-3xl border border-border bg-card p-7 md:p-8 transition-all duration-500 hover:-translate-y-1 hover:shadow-elegant hover:bg-brand-green hover:border-brand-green";
+/* Hover oboji ceo boks u brand-green. Dele ga oba stila kartica. */
+const cardHover =
+  "group transition-all duration-500 hover:-translate-y-1 hover:shadow-elegant hover:bg-brand-green hover:border-brand-green";
 
-const cardText =
-  "font-display text-xl leading-snug text-brand-brown transition-colors duration-500 group-hover:text-white";
+const fadeToWhite = "transition-colors duration-500 group-hover:text-white";
 
 type BtnProps = {
   children: React.ReactNode;
   href?: string;
-  variant?: "primary" | "ghost" | "outline";
+  variant?: "primary" | "ghost" | "outline" | "terracotta";
   className?: string;
   onClick?: () => void;
   type?: "button" | "submit";
@@ -92,6 +105,9 @@ function Button({
       "bg-brand-green text-primary-foreground shadow-soft hover:shadow-elegant hover:-translate-y-0.5",
     outline:
       "border border-brand-brown/20 text-brand-brown hover:bg-brand-brown/5 hover:border-brand-brown/40",
+    /* Terakota je svetla — beo tekst na njoj pada na ~2.7:1, pa ide braon (~5:1). */
+    terracotta:
+      "bg-brand-terracotta text-brand-brown shadow-soft hover:shadow-elegant hover:-translate-y-0.5",
     ghost: "text-brand-brown hover:text-brand-green",
   };
   const cls = `${base} ${styles[variant]} ${className}`;
@@ -144,7 +160,7 @@ function Hero() {
           <div className="lg:col-span-6 fade-in-up">
             <h1 className="text-[2.75rem] leading-[1.02] sm:text-6xl md:text-7xl text-brand-brown">
               Radiš ceo dan, treniraš, paziš na ishranu – a stomak ti izgleda{" "}
-              <em className="italic text-brand-green">isto</em>.
+              <em className="italic text-brand-green">isto</em>?
             </h1>
             <p className="mt-7 max-w-lg text-base md:text-lg text-muted-foreground leading-relaxed">
               Vodim žene kroz proces održivog mršavljenja i izgradnje zdravih navika — bez dijeta i
@@ -152,10 +168,10 @@ function Hero() {
             </p>
             <div className="mt-9 flex flex-col sm:flex-row gap-3 sm:items-center">
               <Button href="#prijava" variant="primary">
-                Prijavi se za mentorstvo
+                PRIJAVI SE ZA MENTORSTVO
               </Button>
-              <Button href="#vodic" variant="outline">
-                Preuzmi besplatan vodič
+              <Button href="#vodic" variant="terracotta">
+                PREUZMI BESPLATAN VODIČ
               </Button>
             </div>
           </div>
@@ -189,23 +205,37 @@ function OnlineMentorstvo() {
   );
 }
 
+/* Stil A — svetlo žalfija ikonica, naslov + dopuna. */
 function StaObuhvata() {
   const items = [
-    "Individualni plan ishrane prilagođen tvojim potrebama",
-    "Individualan plan treninga prema tvojim ciljevima",
-    "Praćenje napretka na nedeljnom nivou i izmene",
-    "Moja podrška 7 dana u nedelji",
-    "Plan suplementacije",
-    "Video materijal sa pravilnim izvođenjem vežbi",
+    { icon: Utensils, title: "Individualni plan ishrane", text: "prilagođen tvojim potrebama" },
+    { icon: Trophy, title: "Individualan plan treninga", text: "prema tvojim ciljevima" },
+    { icon: TrendingUp, title: "Praćenje napretka", text: "na nedeljnom nivou i izmene" },
+    { icon: HeartHandshake, title: "Moja podrška", text: "7 dana u nedelji" },
+    { icon: Pill, title: "Plan suplementacije" },
+    { icon: Video, title: "Video materijal", text: "sa pravilnim izvođenjem vežbi" },
   ];
   return (
     <section id="sta-obuhvata" className="py-24 md:py-32 bg-brand-cream-deep/60">
       <Container>
         <SectionHeading caps title="ŠTA OBUHVATA MENTORSTVO?" />
         <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {items.map((text) => (
-            <div key={text} className={`${cardBase} flex items-center`}>
-              <span className={cardText}>{text}</span>
+          {items.map(({ icon: Icon, title, text }) => (
+            <div
+              key={title}
+              className={`${cardHover} rounded-3xl border border-border bg-card p-7`}
+            >
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-green-soft text-brand-green transition-colors duration-500 group-hover:bg-white/15 group-hover:text-white">
+                <Icon className="h-5 w-5" />
+              </div>
+              <h3 className={`mt-6 text-xl text-brand-brown ${fadeToWhite}`}>{title}</h3>
+              {text && (
+                <p
+                  className={`mt-3 text-sm leading-relaxed text-muted-foreground transition-colors duration-500 group-hover:text-white/85`}
+                >
+                  {text}
+                </p>
+              )}
             </div>
           ))}
         </div>
@@ -214,24 +244,53 @@ function StaObuhvata() {
   );
 }
 
+/* Stil B — krem ikonica, prva kartica statično zelena. */
 function KakoFunkcionise() {
   const items = [
-    "Na početku saradnje popunjavaš upitnik na osnovu kog dobijam informacije i sastavljam plan ishrane i treninga",
-    "Plan pravim prema tvojim ciljevima, trenutnom stanju i mogućnostima",
-    "Na nedeljnom nivou mi šalješ izveštaj i pratim napredak",
-    "Na osnovu izveštaja pravim izmene u ishrani i treningu po potrebi",
-    "Sve se prilagođava tako da dobiješ maksimum",
+    {
+      icon: Hourglass,
+      text: "Na početku saradnje popunjavaš upitnik na osnovu kog dobijam informacije i sastavljam plan ishrane i treninga",
+    },
+    { icon: Award, text: "Plan pravim prema tvojim ciljevima, trenutnom stanju i mogućnostima" },
+    { icon: TrendingUp, text: "Na nedeljnom nivou mi šalješ izveštaj i pratim napredak" },
+    { icon: Utensils, text: "Na osnovu izveštaja pravim izmene u ishrani i treningu po potrebi" },
+    { icon: Target, text: "Sve se prilagođava tako da dobiješ maksimum" },
   ];
   return (
     <section id="kako-funkcionise" className="py-24 md:py-32">
       <Container>
         <SectionHeading caps title="KAKO FUNKCIONIŠE?" />
         <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {items.map((text) => (
-            <div key={text} className={`${cardBase} flex items-center`}>
-              <span className={cardText}>{text}</span>
-            </div>
-          ))}
+          {items.map(({ icon: Icon, text }, i) => {
+            const zelena = i === 0;
+            return (
+              <div
+                key={text}
+                className={`group rounded-3xl p-8 border transition-all duration-500 hover:-translate-y-1 hover:shadow-elegant ${
+                  zelena
+                    ? "bg-brand-green border-brand-green"
+                    : "bg-card border-border hover:bg-brand-green hover:border-brand-green"
+                }`}
+              >
+                <div
+                  className={`flex h-12 w-12 items-center justify-center rounded-2xl transition-colors duration-500 ${
+                    zelena
+                      ? "bg-white/15 text-white"
+                      : "bg-brand-cream-deep text-brand-green group-hover:bg-white/15 group-hover:text-white"
+                  }`}
+                >
+                  <Icon className="h-5 w-5" />
+                </div>
+                <h3
+                  className={`mt-6 text-xl leading-snug ${
+                    zelena ? "text-white" : `text-brand-brown ${fadeToWhite}`
+                  }`}
+                >
+                  {text}
+                </h3>
+              </div>
+            );
+          })}
         </div>
       </Container>
     </section>
