@@ -42,7 +42,13 @@ export const Route = createFileRoute("/")({
 
 /* ---------- Reusable primitives ---------- */
 
-function Container({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+function Container({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
   return <div className={`mx-auto w-full max-w-6xl px-6 md:px-10 ${className}`}>{children}</div>;
 }
 
@@ -58,7 +64,9 @@ function SectionHeading({
   return (
     <div className={`max-w-2xl ${align === "center" ? "mx-auto text-center" : ""}`}>
       <h2 className="text-4xl md:text-5xl">{title}</h2>
-      {intro && <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">{intro}</p>}
+      {intro && (
+        <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">{intro}</p>
+      )}
     </div>
   );
 }
@@ -72,7 +80,14 @@ type BtnProps = {
   type?: "button" | "submit";
 };
 
-function Button({ children, href, variant = "primary", className = "", onClick, type = "button" }: BtnProps) {
+function Button({
+  children,
+  href,
+  variant = "primary",
+  className = "",
+  onClick,
+  type = "button",
+}: BtnProps) {
   const base =
     "inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium tracking-wide transition-all duration-300 will-change-transform";
   const styles: Record<string, string> = {
@@ -108,7 +123,9 @@ function Nav() {
         </a>
         <div className="hidden md:flex items-center gap-8">
           <nav className="flex items-center gap-8 text-sm text-brand-brown/80">
-            <a href="#ana" className="hover:text-brand-green transition">O meni</a>
+            <a href="#ana" className="hover:text-brand-green transition">
+              O meni
+            </a>
           </nav>
           <a
             href="#prijava"
@@ -130,11 +147,12 @@ function Hero() {
           <div className="lg:col-span-6 fade-in-up">
             <h1 className="text-[2.75rem] leading-[1.02] sm:text-6xl md:text-7xl text-brand-brown">
               Zdravlje koje <em className="italic text-brand-green">traje</em>,
-              <br className="hidden sm:block" /> promena koja se <br className="hidden sm:block" /> ne završava dijetom.
+              <br className="hidden sm:block" /> promena koja se <br className="hidden sm:block" />{" "}
+              ne završava dijetom.
             </h1>
             <p className="mt-7 max-w-lg text-base md:text-lg text-muted-foreground leading-relaxed">
-              Vodim žene kroz proces održivog mršavljenja i izgradnje zdravih navika —
-              bez restrikcija, bez pritiska, uz podršku svake nedelje.
+              Vodim žene kroz proces održivog mršavljenja i izgradnje zdravih navika — bez
+              restrikcija, bez pritiska, uz podršku svake nedelje.
             </p>
             <div className="mt-9 flex flex-col sm:flex-row gap-3 sm:items-center">
               <Button href="#prijava" variant="primary">
@@ -209,11 +227,31 @@ function WhyMentorship() {
 
 function WhatYouGet() {
   const items = [
-    { icon: Utensils, title: "Individualni plan ishrane", text: "Sastavljen po tvom telu, navikama i preferencijama." },
-    { icon: Dumbbell, title: "Individualni plan treninga", text: "Kod kuće ili u teretani — prilagođeno tvom nivou." },
-    { icon: CalendarCheck, title: "Nedeljno praćenje", text: "Redovna analiza i podešavanje strategije." },
-    { icon: MessagesSquare, title: "Podrška 7 dana u nedelji", text: "Tu sam kada ti je potrebno usmerenje ili reč ohrabrenja." },
-    { icon: PlayCircle, title: "Video biblioteka vežbi", text: "Jasna demonstracija svake vežbe iz plana." },
+    {
+      icon: Utensils,
+      title: "Individualni plan ishrane",
+      text: "Sastavljen po tvom telu, navikama i preferencijama.",
+    },
+    {
+      icon: Dumbbell,
+      title: "Individualni plan treninga",
+      text: "Kod kuće ili u teretani — prilagođeno tvom nivou.",
+    },
+    {
+      icon: CalendarCheck,
+      title: "Nedeljno praćenje",
+      text: "Redovna analiza i podešavanje strategije.",
+    },
+    {
+      icon: MessagesSquare,
+      title: "Podrška 7 dana u nedelji",
+      text: "Tu sam kada ti je potrebno usmerenje ili reč ohrabrenja.",
+    },
+    {
+      icon: PlayCircle,
+      title: "Video biblioteka vežbi",
+      text: "Jasna demonstracija svake vežbe iz plana.",
+    },
     { icon: Pill, title: "Plan suplementacije", text: "Samo ono što ima smisla — bez suvišnog." },
   ];
   return (
@@ -236,8 +274,12 @@ function WhatYouGet() {
               >
                 <Icon className="h-5 w-5" />
               </div>
-              <h3 className={`mt-6 text-xl ${i === 0 ? "text-white" : "text-brand-brown"}`}>{title}</h3>
-              <p className={`mt-3 text-sm leading-relaxed ${i === 0 ? "text-white/85" : "text-muted-foreground"}`}>
+              <h3 className={`mt-6 text-xl ${i === 0 ? "text-white" : "text-brand-brown"}`}>
+                {title}
+              </h3>
+              <p
+                className={`mt-3 text-sm leading-relaxed ${i === 0 ? "text-white/85" : "text-muted-foreground"}`}
+              >
                 {text}
               </p>
             </div>
@@ -282,7 +324,9 @@ function IsItForYou() {
           </div>
 
           <div className="rounded-3xl bg-brand-brown text-primary-foreground p-8 md:p-10">
-            <h3 className="text-3xl md:text-4xl text-primary-foreground">Kada mentorstvo nije pravi izbor?</h3>
+            <h3 className="text-3xl md:text-4xl text-primary-foreground">
+              Kada mentorstvo nije pravi izbor?
+            </h3>
             <ul className="mt-8 space-y-4">
               {notForYou.map((t) => (
                 <li key={t} className="flex items-start gap-3">
@@ -318,7 +362,8 @@ function AboutAna() {
           <div className="lg:col-span-7">
             <p className="text-xs uppercase tracking-[0.22em] text-brand-brown/60">O meni</p>
             <h2 className="mt-5 text-4xl md:text-5xl text-brand-brown">
-              Verujem da <em className="italic text-brand-green">promena</em> počinje iz razumevanja, ne iz kazne.
+              Verujem da <em className="italic text-brand-green">promena</em> počinje iz
+              razumevanja, ne iz kazne.
             </h2>
             <div className="mt-8 space-y-5 text-muted-foreground leading-relaxed">
               <p>
@@ -327,8 +372,8 @@ function AboutAna() {
                 gradimo zdrav odnos sa hranom, telom i sobom.
               </p>
               <p>
-                Verujem u strpljenje, individualnost i realne, održive korake. Mentorstvo koje
-                nudim je topao, ali struktuiran prostor — dovoljno blizak da te razume, dovoljno
+                Verujem u strpljenje, individualnost i realne, održive korake. Mentorstvo koje nudim
+                je topao, ali struktuiran prostor — dovoljno blizak da te razume, dovoljno
                 profesionalan da te odvede tamo gde želiš.
               </p>
             </div>
@@ -374,7 +419,10 @@ function GuideForm() {
 
             <form onSubmit={handleSubmit} className="mt-9 max-w-lg space-y-4" noValidate>
               <div>
-                <label htmlFor="ime" className="block text-xs uppercase tracking-[0.22em] text-brand-brown/70">
+                <label
+                  htmlFor="ime"
+                  className="block text-xs uppercase tracking-[0.22em] text-brand-brown/70"
+                >
                   Ime
                 </label>
                 <input
@@ -388,7 +436,10 @@ function GuideForm() {
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block text-xs uppercase tracking-[0.22em] text-brand-brown/70">
+                <label
+                  htmlFor="email"
+                  className="block text-xs uppercase tracking-[0.22em] text-brand-brown/70"
+                >
                   Email
                 </label>
                 <input

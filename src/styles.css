@@ -50,19 +50,20 @@
   --color-brand-cream-deep: var(--brand-cream-deep);
 
   --shadow-soft: 0 1px 2px oklch(0.25 0.03 60 / 0.04), 0 8px 24px oklch(0.25 0.03 60 / 0.06);
-  --shadow-elegant: 0 2px 4px oklch(0.25 0.03 60 / 0.05), 0 20px 50px -12px oklch(0.25 0.03 60 / 0.12);
+  --shadow-elegant:
+    0 2px 4px oklch(0.25 0.03 60 / 0.05), 0 20px 50px -12px oklch(0.25 0.03 60 / 0.12);
 }
 
 :root {
   --radius: 1rem;
 
   /* Brand palette (from brief) — expressed in oklch */
-  --brand-brown: oklch(0.28 0.035 55);        /* #3D2B1F */
+  --brand-brown: oklch(0.28 0.035 55); /* #3D2B1F */
   --brand-brown-soft: oklch(0.42 0.03 55);
-  --brand-green: oklch(0.63 0.045 175);       /* #6A9D90 */
+  --brand-green: oklch(0.63 0.045 175); /* #6A9D90 */
   --brand-green-soft: oklch(0.88 0.025 175);
-  --brand-terracotta: oklch(0.7 0.08 55);     /* #C4956A */
-  --brand-cream: oklch(0.955 0.012 80);       /* #F1EDE7 */
+  --brand-terracotta: oklch(0.7 0.08 55); /* #C4956A */
+  --brand-cream: oklch(0.955 0.012 80); /* #F1EDE7 */
   --brand-cream-deep: oklch(0.92 0.015 78);
 
   --background: var(--brand-cream);
@@ -103,7 +104,10 @@
     text-rendering: optimizeLegibility;
   }
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-display);
     font-weight: 400;
     letter-spacing: -0.02em;

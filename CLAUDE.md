@@ -47,13 +47,13 @@ duge tranzicije (300–500ms). Ništa što skače.
 Definisani u `src/styles.css` kao oklch CSS varijable. **Uvek koristiti token klase**
 (`text-brand-brown`, `bg-brand-green`), nikad hardkodovane hex vrednosti u komponentama.
 
-| Token | Hex | Uloga |
-|---|---|---|
-| `brand-brown` | `#3D2B1F` | Primarni tekst, naslovi, tamne površine |
-| `brand-green` | `#6A9D90` | Primary — dugmad, akcenti, `<em>` u naslovima |
-| `brand-terracotta` | `#C4956A` | Sekundarni akcenat |
-| `brand-cream` | `#F1EDE7` | Pozadina stranice |
-| `brand-cream-deep` | — | Tamnija krem, za alternativne sekcije |
+| Token              | Hex       | Uloga                                         |
+| ------------------ | --------- | --------------------------------------------- |
+| `brand-brown`      | `#3D2B1F` | Primarni tekst, naslovi, tamne površine       |
+| `brand-green`      | `#6A9D90` | Primary — dugmad, akcenti, `<em>` u naslovima |
+| `brand-terracotta` | `#C4956A` | Sekundarni akcenat                            |
+| `brand-cream`      | `#F1EDE7` | Pozadina stranice                             |
+| `brand-cream-deep` | —         | Tamnija krem, za alternativne sekcije         |
 
 Prateći tokeni: `brand-brown-soft`, `brand-green-soft`, plus standardni shadcn tokeni
 (`background`, `foreground`, `card`, `muted-foreground`, `border`…).
