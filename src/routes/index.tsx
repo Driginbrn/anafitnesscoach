@@ -16,8 +16,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-import heroImg from "@/assets/ana-hero.png";
-import anaImg from "@/assets/ana-o-meni.png";
+import anaCutout from "@/assets/ana-cutout.png";
 import lifestyle1 from "@/assets/lifestyle-1.jpg";
 import lifestyle2 from "@/assets/lifestyle-2.jpg";
 
@@ -147,16 +146,14 @@ function Hero() {
             </div>
           </div>
 
-          <div className="lg:col-span-6 relative">
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl bg-brand-cream-deep shadow-elegant">
-              <img
-                src={heroImg}
-                alt="Ana — mentorka za zdravlje i mršavljenje"
-                width={1080}
-                height={1350}
-                className="h-full w-full object-contain object-bottom"
-              />
-            </div>
+          <div className="lg:col-span-6 flex justify-center">
+            <img
+              src={anaCutout}
+              alt="Ana — mentorka za zdravlje i mršavljenje"
+              width={304}
+              height={1010}
+              className="h-[440px] sm:h-[560px] lg:h-[720px] w-auto"
+            />
           </div>
         </div>
       </Container>
@@ -308,17 +305,15 @@ function AboutAna() {
     <section id="ana" className="py-24 md:py-32 bg-brand-cream-deep/60">
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-          <div className="lg:col-span-5">
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl bg-brand-cream shadow-elegant">
-              <img
-                src={anaImg}
-                alt="Ana — mentorka za zdravlje i mršavljenje"
-                loading="lazy"
-                width={843}
-                height={1110}
-                className="h-full w-full object-contain object-bottom"
-              />
-            </div>
+          <div className="lg:col-span-5 flex justify-center">
+            <img
+              src={anaCutout}
+              alt="Ana — mentorka za zdravlje i mršavljenje"
+              loading="lazy"
+              width={304}
+              height={1010}
+              className="h-[420px] sm:h-[520px] lg:h-[640px] w-auto"
+            />
           </div>
           <div className="lg:col-span-7">
             <p className="text-xs uppercase tracking-[0.22em] text-brand-brown/60">O meni</p>
