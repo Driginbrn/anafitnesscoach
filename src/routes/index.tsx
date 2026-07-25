@@ -146,13 +146,12 @@ function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           <div className="lg:col-span-6 fade-in-up">
             <h1 className="text-[2.75rem] leading-[1.02] sm:text-6xl md:text-7xl text-brand-brown">
-              Zdravlje koje <em className="italic text-brand-green">traje</em>,
-              <br className="hidden sm:block" /> promena koja se <br className="hidden sm:block" />{" "}
-              ne završava dijetom.
+              Radiš ceo dan, treniraš, paziš na ishranu – a stomak ti izgleda{" "}
+              <em className="italic text-brand-green">isto</em>.
             </h1>
             <p className="mt-7 max-w-lg text-base md:text-lg text-muted-foreground leading-relaxed">
-              Vodim žene kroz proces održivog mršavljenja i izgradnje zdravih navika — bez
-              restrikcija, bez pritiska, uz podršku svake nedelje.
+              Vodim žene kroz proces održivog mršavljenja i izgradnje zdravih navika — bez dijeta i
+              jojo efekta.
             </p>
             <div className="mt-9 flex flex-col sm:flex-row gap-3 sm:items-center">
               <Button href="#prijava" variant="primary">
