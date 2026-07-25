@@ -63,11 +63,19 @@ Radijusi su veliki i meki — `rounded-3xl` za kartice, `rounded-full` za dugmad
 
 ## Tipografija
 
-- **Fraunces** (serif) — svi naslovi, `font-weight: 400`, `letter-spacing: -0.02em`.
-  Klasa `font-display` za tekst koji nije `<h1>`–`<h4>`.
+- **Playfair Display** (serif) — svi naslovi, `font-weight: 400`,
+  `letter-spacing: -0.02em`. Klasa `font-display` za tekst koji nije `<h1>`–`<h4>`.
+  Učitavamo i pravi kurziv (`ital`) — koristi se za istaknute reči u naslovima
+  (`<em className="italic text-brand-green">`), pa se ne sme oslanjati na sintetički.
 - **Inter** — body tekst.
-- Učitavaju se preko Google Fonts u `src/routes/__root.tsx`.
+- Učitavaju se preko Google Fonts u `src/routes/__root.tsx`. Držati listu težina
+  minimalnom — svaka dodatna usporava prvi render.
 - Sitni label tekst: `text-xs uppercase tracking-[0.22em]`.
+
+Playfair ima jak kontrast poteza i duge produžetke (`j`, `g`, `p`). Ako naslov u više
+redova deluje zbijeno, popuštati `leading`, ne smanjivati font.
+
+> Ranije je bio Fraunces; zamenjen jer su mu `j` i `g` imali neobične repove.
 
 ## Struktura stranice
 
