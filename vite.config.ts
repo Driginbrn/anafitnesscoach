@@ -12,4 +12,11 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  nitro: {
+    // Sajt zivi na Cloudflare Pages (anafitnesscoach.pages.dev).
+    preset: "cloudflare-pages",
+    // Nitro inace upisuje danasnji datum, a Cloudflare odbija datum noviji od
+    // svog izdanja runtime-a — deployment tada prolazi, ali Worker vraca 523.
+    compatibilityDate: "2025-09-01",
+  },
 });
