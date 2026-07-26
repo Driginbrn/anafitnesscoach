@@ -81,12 +81,16 @@ redova deluje zbijeno, popuštati `leading`, ne smanjivati font.
 
 Sve sekcije su trenutno u `src/routes/index.tsx`:
 
-Nav → Hero → Online mentorstvo → Šta obuhvata → Kako funkcioniše → Za koga →
-O meni → Finalni CTA → Footer
+Nav → Hero → O meni → Šta obuhvata → Kako funkcioniše → Za koga → Pristup →
+Finalni CTA → Footer
 
 Interne komponente (`Container`, `SectionHeading`, `Button`) su definisane u istom fajlu.
-Sekcije koriste `id` za anchor navigaciju: `#mentorstvo`, `#sta-obuhvata`,
-`#kako-funkcionise`, `#za-koga`, `#ana`, `#prijava`.
+Sekcije koriste `id` za anchor navigaciju: `#ana`, `#sta-obuhvata`,
+`#kako-funkcionise`, `#za-koga`, `#prijava`.
+
+`OMeni` je predstavljanje odmah ispod hero-a — bez slike, jer je Anina fotografija
+taman iznad. `Pristup` je duža sekcija pri dnu (slika + „Verujem da promena počinje…"),
+nema `id` jer se do nje ne linkuje.
 
 ### Spoljni linkovi
 

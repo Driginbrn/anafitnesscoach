@@ -199,11 +199,40 @@ function Hero() {
   );
 }
 
-function OnlineMentorstvo() {
+/* Predstavljanje odmah ispod hero-a. Bez slike — Anina fotografija je taman iznad. */
+function OMeni() {
   return (
-    <section id="mentorstvo" className="pt-4 md:pt-6 pb-16 md:pb-20">
+    <section id="ana" className="pt-8 md:pt-10 pb-24 md:pb-32">
       <Container>
-        <SectionHeading caps title="ONLINE MENTORSTVO" />
+        <div className="flex flex-col items-center">
+          <p className="text-xs uppercase tracking-[0.22em] text-brand-brown/60">O meni</p>
+          <h2 className="mt-5 text-4xl md:text-5xl tracking-[0.02em] text-brand-brown text-center">
+            ANA AVRAMOVIĆ
+          </h2>
+          <p className="mt-4 text-sm uppercase tracking-[0.18em] text-brand-green">
+            Online fitness trener
+          </p>
+
+          <div className="mt-10 max-w-3xl space-y-5 text-muted-foreground leading-relaxed">
+            <p>
+              Već 8 godina se aktivno bavim fitnesom. U tom periodu prošla sam kroz različite faze —
+              dijete, prejedanja, hormonski disbalans, anemiju. Moje zdravstveno stanje prirodno me
+              je dovelo do toga da istražujem, edukujem se i sada pomažem drugim ženama da žive
+              kvalitetniji život.
+            </p>
+            <p>
+              Moj cilj nije samo gubitak kilograma, već usvajanje zdravih navika, bolje zdravstveno
+              stanje i razumevanje kako naše telo funkcioniše. Znam kako izgleda živeti nezdrav
+              život, a još bolje znam kako se osećam sada kada živim zdrav život. I to je ono što me
+              pokreće da se ne vraćam na staro.
+            </p>
+            <p>
+              Zato pravim sistem u kom te učim kako da dobiješ pre svega zdrave navike koje će ti
+              služiti ceo život, a ne još jednu dijetu koju ćeš da mrziš. Moj fokus je na tome da
+              postaneš bolja osoba kroz ovaj proces i zato se radujem našem druženju.
+            </p>
+          </div>
+        </div>
       </Container>
     </section>
   );
@@ -360,46 +389,38 @@ function ZaKoga() {
   );
 }
 
-function AboutAna() {
+function Pristup() {
   return (
-    <section id="ana" className="py-24 md:py-32 bg-brand-cream-deep/60">
+    <section className="py-24 md:py-32">
       <Container>
-        <div className="flex flex-col items-center">
-          <img
-            src={anaCutout}
-            alt="Ana Avramović — online fitness trener"
-            loading="lazy"
-            width={304}
-            height={1010}
-            className="h-[420px] sm:h-[520px] lg:h-[600px] w-auto"
-          />
-
-          <p className="mt-12 text-xs uppercase tracking-[0.22em] text-brand-brown/60">O meni</p>
-          <h2 className="mt-5 text-4xl md:text-5xl tracking-[0.02em] text-brand-brown text-center">
-            ANA AVRAMOVIĆ
-          </h2>
-          <p className="mt-4 text-sm uppercase tracking-[0.18em] text-brand-green">
-            Online fitness trener
-          </p>
-
-          <div className="mt-10 max-w-3xl space-y-5 text-muted-foreground leading-relaxed">
-            <p>
-              Već 8 godina se aktivno bavim fitnesom. U tom periodu prošla sam kroz različite faze —
-              dijete, prejedanja, hormonski disbalans, anemiju. Moje zdravstveno stanje prirodno me
-              je dovelo do toga da istražujem, edukujem se i sada pomažem drugim ženama da žive
-              kvalitetniji život.
-            </p>
-            <p>
-              Moj cilj nije samo gubitak kilograma, već usvajanje zdravih navika, bolje zdravstveno
-              stanje i razumevanje kako naše telo funkcioniše. Znam kako izgleda živeti nezdrav
-              život, a još bolje znam kako se osećam sada kada živim zdrav život. I to je ono što me
-              pokreće da se ne vraćam na staro.
-            </p>
-            <p>
-              Zato pravim sistem u kom te učim kako da dobiješ pre svega zdrave navike koje će ti
-              služiti ceo život, a ne još jednu dijetu koju ćeš da mrziš. Moj fokus je na tome da
-              postaneš bolja osoba kroz ovaj proces i zato se radujem našem druženju.
-            </p>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+          <div className="lg:col-span-5 flex justify-center">
+            <img
+              src={anaCutout}
+              alt="Ana Avramović — online fitness trener"
+              loading="lazy"
+              width={304}
+              height={1010}
+              className="h-[420px] sm:h-[520px] lg:h-[640px] w-auto"
+            />
+          </div>
+          <div className="lg:col-span-7">
+            <h2 className="text-4xl md:text-5xl text-brand-brown">
+              Verujem da <em className="italic text-brand-green">promena</em> počinje iz
+              razumevanja, ne iz kazne.
+            </h2>
+            <div className="mt-8 space-y-5 text-muted-foreground leading-relaxed">
+              <p>
+                Godinama unazad radim sa ženama koje su prošle kroz sve — dijete, restrikcije,
+                razočaranja. Moj rad nije još jedan plan ishrane. To je proces u kome zajedno
+                gradimo zdrav odnos sa hranom, telom i sobom.
+              </p>
+              <p>
+                Verujem u strpljenje, individualnost i realne, održive korake. Mentorstvo koje nudim
+                je topao, ali struktuiran prostor — dovoljno blizak da te razume, dovoljno
+                profesionalan da te odvede tamo gde želiš.
+              </p>
+            </div>
           </div>
         </div>
       </Container>
@@ -488,11 +509,11 @@ function Index() {
     <main className="bg-background text-foreground">
       <Nav />
       <Hero />
-      <OnlineMentorstvo />
+      <OMeni />
       <StaObuhvata />
       <KakoFunkcionise />
       <ZaKoga />
-      <AboutAna />
+      <Pristup />
       <FinalCTA />
       <Footer />
     </main>
