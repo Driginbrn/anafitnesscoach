@@ -82,11 +82,13 @@ redova deluje zbijeno, popuštati `leading`, ne smanjivati font.
 Sve sekcije su trenutno u `src/routes/index.tsx`:
 
 Nav → Hero → O meni → Šta obuhvata → Kako funkcioniše → Za koga → Pristup →
-Finalni CTA → Footer
+Finalni CTA → Česta pitanja → Footer
 
 Interne komponente (`Container`, `SectionHeading`, `Button`) su definisane u istom fajlu.
 Sekcije koriste `id` za anchor navigaciju: `#ana`, `#sta-obuhvata`,
-`#kako-funkcionise`, `#za-koga`, `#prijava`.
+`#kako-funkcionise`, `#za-koga`, `#prijava`, `#pitanja`.
+
+`SectionHeading` prima i `eyebrow` — sitan nadnaslov sa crticom ispred, koristi ga FAQ.
 
 `OMeni` je predstavljanje odmah ispod hero-a — bez slike, jer je Anina fotografija
 taman iznad. `Pristup` je duža sekcija pri dnu (slika + „Verujem da promena počinje…"),
@@ -125,7 +127,8 @@ jer je osnovni `letter-spacing` za naslove negativan.
 - `src/assets/transformation-*.jpg`, `ana-portrait.jpg`, `hero-mentor.jpg` i
   `lifestyle-1.jpg` se više ne koriste. `lifestyle-2.jpg` je pozadina finalnog CTA.
 - `ana-cutout.png` je 421 KB; WebP bi to spustio na ~80 KB.
-- Nema sekcija: cene/paketi, testimonials, FAQ.
+- Nema sekcija: cene/paketi, testimonials.
+- FAQ stoji **ispod** finalnog CTA, po izričitom zahtevu — uobičajenije je iznad.
 - Nav ima samo jedan link („O meni") iako sada postoji pet sekcija sa sidrima.
 
 ## Lovable

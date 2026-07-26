@@ -1,5 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import {
+  Plus,
+  Minus,
   Utensils,
   Trophy,
   TrendingUp,
@@ -53,18 +56,35 @@ function Container({
 function SectionHeading({
   title,
   intro,
+  eyebrow,
   align = "left",
   caps = false,
 }: {
   title: string;
   intro?: string;
+  /** Sitan nadnaslov sa crticom ispred, iznad glavnog naslova. */
+  eyebrow?: string;
   align?: "left" | "center";
   /** Naslovi pisani verzalom traže pozitivan razmak — bez toga se slova slepe. */
   caps?: boolean;
 }) {
   return (
     <div className={`max-w-2xl ${align === "center" ? "mx-auto text-center" : ""}`}>
-      <h2 className={`text-4xl md:text-5xl ${caps ? "tracking-[0.02em]" : ""}`}>{title}</h2>
+      {eyebrow && (
+        <p
+          className={`flex items-center gap-3 text-xs uppercase tracking-[0.22em] text-brand-green ${
+            align === "center" ? "justify-center" : ""
+          }`}
+        >
+          <span className="h-px w-8 bg-brand-green/50" aria-hidden />
+          {eyebrow}
+        </p>
+      )}
+      <h2
+        className={`text-4xl md:text-5xl ${eyebrow ? "mt-5" : ""} ${caps ? "tracking-[0.02em]" : ""}`}
+      >
+        {title}
+      </h2>
       {intro && (
         <p className="mt-5 text-base md:text-lg text-muted-foreground leading-relaxed">{intro}</p>
       )}
@@ -461,6 +481,79 @@ function FinalCTA() {
   );
 }
 
+function Faq() {
+  const items = [
+    {
+      q: "Da li može kućni trening ili u teretani?",
+      a: "Pravim planove i za kućni i za teretanu. Trening u teretani je mnogo bolja opcija jer pruža veću mogućnost napretka. Ako izabereš kućni trening potrebno je kupiti nekoliko tegova i osnovnu opremu.",
+    },
+    {
+      q: "Koliko mi treba vremena za pripremu obroka?",
+      a: "Zapravo u kuhinji ćeš provesti manje vremena nego što si mislila. Obroci su jednostavni i ukusni, možeš ih pripremiti za nekoliko dana unapred. Za pripremu jednog obroka ti je potrebno od 2 do 15 minuta, a ako spremiš za nekoliko dana unapred još i manje.",
+    },
+    {
+      q: "Da li mogu uzeti samo plan ishrane ili treninga?",
+      a: "Postoji opcija i toga, ali je to jednokratni plan koji ne uključuje moje vođenje i praćenje napretka. I naravno cena je niža.",
+    },
+    {
+      q: "Koliko traje mentorstvo?",
+      a: "Mentorstvo traje minimum 4 nedelje, postoji mogućnost plaćanja 2 meseca odjednom i u tom slučaju je cena povoljnija. Mentorstvo nije program koji ima kraj, to je vođenje kroz proces do tvog cilja i nema ograničenja.",
+    },
+    {
+      q: "Kada mogu da vidim napredak?",
+      a: "Napredak je individualna stvar, ali ako poštuješ plan, već posle nedelju dana ćeš osetiti prve promene u energiji i smanjenju nadutosti. Napredak u izgledu se vidi već posle 3-4 nedelje, ali najbolji rezultati dolaze posle 8-12 nedelja kontinuiranog rada.",
+    },
+    {
+      q: "Da li sama računam makrose?",
+      a: "Ne. Od mene dobijaš sve već izračunato i pratiš količine i namirnice koje sam napisala. Ako želiš da neku namirnicu zameniš dobijaš i kalkulator koji ti automatski izračuna kalorije za tu namirnicu koju menjaš.",
+    },
+  ];
+  const [open, setOpen] = useState<number | null>(0);
+  return (
+    <section id="pitanja" className="py-24 md:py-32">
+      <Container>
+        <SectionHeading eyebrow="Česta pitanja" title="Sve što bi mogla da pitaš." />
+        <div className="mt-14 max-w-3xl divide-y divide-border border-y border-border">
+          {items.map((it, i) => {
+            const isOpen = open === i;
+            return (
+              <div key={it.q}>
+                <button
+                  onClick={() => setOpen(isOpen ? null : i)}
+                  className="flex w-full items-center justify-between gap-6 py-6 text-left"
+                  aria-expanded={isOpen}
+                  aria-controls={`pitanje-${i}`}
+                >
+                  <span className="text-lg md:text-xl text-brand-brown font-medium">{it.q}</span>
+                  <span
+                    className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-border transition ${
+                      isOpen
+                        ? "bg-brand-green text-primary-foreground border-brand-green"
+                        : "text-brand-brown"
+                    }`}
+                  >
+                    {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                  </span>
+                </button>
+                <div
+                  id={`pitanje-${i}`}
+                  className={`grid transition-all duration-500 ease-out ${
+                    isOpen ? "grid-rows-[1fr] opacity-100 pb-6" : "grid-rows-[0fr] opacity-0"
+                  }`}
+                >
+                  <div className="overflow-hidden">
+                    <p className="text-muted-foreground leading-relaxed pr-12">{it.a}</p>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </Container>
+    </section>
+  );
+}
+
 function Footer() {
   return (
     <footer className="border-t border-border pt-16 pb-10">
@@ -515,6 +608,7 @@ function Index() {
       <ZaKoga />
       <Pristup />
       <FinalCTA />
+      <Faq />
       <Footer />
     </main>
   );
