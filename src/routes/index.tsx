@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, type FormEvent } from "react";
 import {
   Utensils,
   Trophy,
@@ -14,11 +13,9 @@ import {
   X,
   Instagram,
   Mail,
-  ArrowRight,
 } from "lucide-react";
 
 import anaCutout from "@/assets/ana-cutout.png";
-import lifestyle1 from "@/assets/lifestyle-1.jpg";
 import lifestyle2 from "@/assets/lifestyle-2.jpg";
 
 export const Route = createFileRoute("/")({
@@ -112,8 +109,14 @@ function Button({
   };
   const cls = `${base} ${styles[variant]} ${className}`;
   if (href) {
+    /* Spoljni linkovi se otvaraju u novom tabu da posetilac ne izgubi stranicu. */
+    const spoljni = href.startsWith("http");
     return (
-      <a href={href} className={cls}>
+      <a
+        href={href}
+        className={cls}
+        {...(spoljni ? { target: "_blank", rel: "noreferrer noopener" } : {})}
+      >
         {children}
       </a>
     );
@@ -170,20 +173,25 @@ function Hero() {
               <Button href="#prijava" variant="primary">
                 PRIJAVI SE ZA MENTORSTVO
               </Button>
-              <Button href="#vodic" variant="terracotta">
+              <Button
+                href="https://preview.mailerlite.io/preview/2485512/sites/191881653543503200/anaavramovic-oczfis"
+                variant="terracotta"
+              >
                 PREUZMI BESPLATAN VODIČ
               </Button>
             </div>
           </div>
 
-          <div className="lg:col-span-6 flex justify-center">
-            <img
-              src={anaCutout}
-              alt="Ana — mentorka za zdravlje i mršavljenje"
-              width={304}
-              height={1010}
-              className="h-[440px] sm:h-[560px] lg:h-[720px] w-auto"
-            />
+          <div className="lg:col-span-6 relative">
+            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl bg-brand-cream-deep shadow-elegant">
+              <img
+                src={anaCutout}
+                alt="Ana Avramović — online fitness trener"
+                width={304}
+                height={1010}
+                className="h-full w-full object-contain object-bottom"
+              />
+            </div>
           </div>
         </div>
       </Container>
@@ -193,13 +201,9 @@ function Hero() {
 
 function OnlineMentorstvo() {
   return (
-    <section id="mentorstvo" className="py-24 md:py-32">
+    <section id="mentorstvo" className="pt-4 md:pt-6 pb-16 md:pb-20">
       <Container>
-        <SectionHeading
-          caps
-          title="ONLINE MENTORSTVO"
-          intro="Individualni pristup sa proverenim sistemima koji daju rezultate"
-        />
+        <SectionHeading caps title="ONLINE MENTORSTVO" />
       </Container>
     </section>
   );
@@ -212,7 +216,7 @@ function StaObuhvata() {
     { icon: Trophy, title: "Individualan plan treninga", text: "prema tvojim ciljevima" },
     { icon: TrendingUp, title: "Praćenje napretka", text: "na nedeljnom nivou i izmene" },
     { icon: HeartHandshake, title: "Moja podrška", text: "7 dana u nedelji" },
-    { icon: Pill, title: "Plan suplementacije" },
+    { icon: Pill, title: "Plan suplementacije", text: "po potrebi" },
     { icon: Video, title: "Video materijal", text: "sa pravilnim izvođenjem vežbi" },
   ];
   return (
@@ -360,121 +364,42 @@ function AboutAna() {
   return (
     <section id="ana" className="py-24 md:py-32 bg-brand-cream-deep/60">
       <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-          <div className="lg:col-span-5 flex justify-center">
-            <img
-              src={anaCutout}
-              alt="Ana — mentorka za zdravlje i mršavljenje"
-              loading="lazy"
-              width={304}
-              height={1010}
-              className="h-[420px] sm:h-[520px] lg:h-[640px] w-auto"
-            />
-          </div>
-          <div className="lg:col-span-7">
-            <p className="text-xs uppercase tracking-[0.22em] text-brand-brown/60">O meni</p>
-            <h2 className="mt-5 text-4xl md:text-5xl text-brand-brown">
-              Verujem da <em className="italic text-brand-green">promena</em> počinje iz
-              razumevanja, ne iz kazne.
-            </h2>
-            <div className="mt-8 space-y-5 text-muted-foreground leading-relaxed">
-              <p>
-                Godinama unazad radim sa ženama koje su prošle kroz sve — dijete, restrikcije,
-                razočaranja. Moj rad nije još jedan plan ishrane. To je proces u kome zajedno
-                gradimo zdrav odnos sa hranom, telom i sobom.
-              </p>
-              <p>
-                Verujem u strpljenje, individualnost i realne, održive korake. Mentorstvo koje nudim
-                je topao, ali struktuiran prostor — dovoljno blizak da te razume, dovoljno
-                profesionalan da te odvede tamo gde želiš.
-              </p>
-            </div>
-          </div>
-        </div>
-      </Container>
-    </section>
-  );
-}
+        <div className="flex flex-col items-center">
+          <img
+            src={anaCutout}
+            alt="Ana Avramović — online fitness trener"
+            loading="lazy"
+            width={304}
+            height={1010}
+            className="h-[420px] sm:h-[520px] lg:h-[600px] w-auto"
+          />
 
-function GuideForm() {
-  const [status, setStatus] = useState<"idle" | "sent">("idle");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+          <p className="mt-12 text-xs uppercase tracking-[0.22em] text-brand-brown/60">O meni</p>
+          <h2 className="mt-5 text-4xl md:text-5xl tracking-[0.02em] text-brand-brown text-center">
+            ANA AVRAMOVIĆ
+          </h2>
+          <p className="mt-4 text-sm uppercase tracking-[0.18em] text-brand-green">
+            Online fitness trener
+          </p>
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    setStatus("sent");
-  };
-
-  return (
-    <section id="vodic" className="py-24 md:py-32 bg-brand-cream-deep/60">
-      <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-          <div className="lg:col-span-5">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl">
-              <img
-                src={lifestyle1}
-                alt="Besplatan vodič — jednostavan početak"
-                loading="lazy"
-                className="h-full w-full object-cover"
-              />
-            </div>
-          </div>
-          <div className="lg:col-span-7">
-            <h2 className="text-4xl md:text-5xl text-brand-brown">
-              Prvih sedam koraka ka zdravijem životu.
-            </h2>
-            <p className="mt-5 text-muted-foreground leading-relaxed max-w-lg">
-              Ostavi svoju email adresu i pošaljem ti kratak, jasan vodič koji možeš da počneš da
-              primenjuješ već ove nedelje — bez restrikcija i pritiska.
+          <div className="mt-10 max-w-3xl space-y-5 text-muted-foreground leading-relaxed">
+            <p>
+              Već 8 godina se aktivno bavim fitnesom. U tom periodu prošla sam kroz različite faze —
+              dijete, prejedanja, hormonski disbalans, anemiju. Moje zdravstveno stanje prirodno me
+              je dovelo do toga da istražujem, edukujem se i sada pomažem drugim ženama da žive
+              kvalitetniji život.
             </p>
-
-            <form onSubmit={handleSubmit} className="mt-9 max-w-lg space-y-4" noValidate>
-              <div>
-                <label
-                  htmlFor="ime"
-                  className="block text-xs uppercase tracking-[0.22em] text-brand-brown/70"
-                >
-                  Ime
-                </label>
-                <input
-                  id="ime"
-                  type="text"
-                  required
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Tvoje ime"
-                  className="mt-2 w-full rounded-2xl border border-border bg-card px-5 py-3.5 text-brand-brown placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-brand-green/40 focus:border-brand-green transition"
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-xs uppercase tracking-[0.22em] text-brand-brown/70"
-                >
-                  Email
-                </label>
-                <input
-                  id="email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="tvoj@email.com"
-                  className="mt-2 w-full rounded-2xl border border-border bg-card px-5 py-3.5 text-brand-brown placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-brand-green/40 focus:border-brand-green transition"
-                />
-              </div>
-              <div className="pt-2 flex flex-wrap items-center gap-4">
-                <Button type="submit" variant="primary">
-                  Preuzmi vodič <ArrowRight className="h-4 w-4" />
-                </Button>
-                {status === "sent" && (
-                  <span className="text-sm text-brand-green">
-                    Hvala — proveri svoj email za nekoliko minuta.
-                  </span>
-                )}
-              </div>
-            </form>
+            <p>
+              Moj cilj nije samo gubitak kilograma, već usvajanje zdravih navika, bolje zdravstveno
+              stanje i razumevanje kako naše telo funkcioniše. Znam kako izgleda živeti nezdrav
+              život, a još bolje znam kako se osećam sada kada živim zdrav život. I to je ono što me
+              pokreće da se ne vraćam na staro.
+            </p>
+            <p>
+              Zato pravim sistem u kom te učim kako da dobiješ pre svega zdrave navike koje će ti
+              služiti ceo život, a ne još jednu dijetu koju ćeš da mrziš. Moj fokus je na tome da
+              postaneš bolja osoba kroz ovaj proces i zato se radujem našem druženju.
+            </p>
           </div>
         </div>
       </Container>
@@ -500,10 +425,12 @@ function FinalCTA() {
             </p>
             <div className="mt-10">
               <a
-                href="mailto:zdravo@ana-mentorstvo.rs?subject=Prijava%20za%20mentorstvo"
+                href="https://wa.me/4915753058942"
+                target="_blank"
+                rel="noreferrer noopener"
                 className="inline-flex items-center gap-2 rounded-full bg-brand-brown px-8 py-4 text-sm font-medium text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:shadow-elegant"
               >
-                Prijavi se za mentorstvo <ArrowRight className="h-4 w-4" />
+                Prijavi se za mentorstvo 1:1
               </a>
             </div>
           </div>
@@ -519,21 +446,21 @@ function Footer() {
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
           <div>
-            <div className="font-display text-3xl text-brand-brown">Ana</div>
+            <div className="font-display text-3xl text-brand-brown">Ana Avramović</div>
           </div>
           <div>
             <div className="text-xs uppercase tracking-[0.22em] text-brand-brown/60">Kontakt</div>
             <a
-              href="mailto:zdravo@ana-mentorstvo.rs"
+              href="mailto:ana.onlinefitnesscoach@gmail.com"
               className="mt-3 inline-flex items-center gap-2 text-brand-brown hover:text-brand-green transition"
             >
-              <Mail className="h-4 w-4" /> zdravo@ana-mentorstvo.rs
+              <Mail className="h-4 w-4" /> ana.onlinefitnesscoach@gmail.com
             </a>
           </div>
           <div>
             <div className="text-xs uppercase tracking-[0.22em] text-brand-brown/60">Prati</div>
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/ana_fitnesscoach_/"
               target="_blank"
               rel="noreferrer noopener"
               className="mt-3 inline-flex items-center gap-2 text-brand-brown hover:text-brand-green transition"
@@ -542,8 +469,14 @@ function Footer() {
             </a>
           </div>
         </div>
-        <div className="mt-14 flex justify-end text-xs text-muted-foreground">
-          <p>Napravljeno sa pažnjom u Srbiji.</p>
+        <div className="mt-14 flex justify-end">
+          <a
+            href="mailto:talicm@icloud.com"
+            aria-label="Izradio M.T — piši mi"
+            className="font-display text-sm tracking-[0.3em] text-brand-brown/45 hover:text-brand-green transition-colors duration-300"
+          >
+            M.T
+          </a>
         </div>
       </Container>
     </footer>
@@ -560,7 +493,6 @@ function Index() {
       <KakoFunkcionise />
       <ZaKoga />
       <AboutAna />
-      <GuideForm />
       <FinalCTA />
       <Footer />
     </main>

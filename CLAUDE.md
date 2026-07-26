@@ -82,13 +82,21 @@ redova deluje zbijeno, popuštati `leading`, ne smanjivati font.
 Sve sekcije su trenutno u `src/routes/index.tsx`:
 
 Nav → Hero → Online mentorstvo → Šta obuhvata → Kako funkcioniše → Za koga →
-O meni → Forma za vodič → Finalni CTA → Footer
+O meni → Finalni CTA → Footer
 
 Interne komponente (`Container`, `SectionHeading`, `Button`) su definisane u istom fajlu.
 Sekcije koriste `id` za anchor navigaciju: `#mentorstvo`, `#sta-obuhvata`,
-`#kako-funkcionise`, `#za-koga`, `#ana`, `#vodic`, `#prijava`. Tri kartice u sekciji
-„Online mentorstvo" su linkovi na naredne tri sekcije — ako se neka preimenuje ili
-ukloni, ažurirati i njih.
+`#kako-funkcionise`, `#za-koga`, `#ana`, `#prijava`.
+
+### Spoljni linkovi
+
+Konverzija ide van sajta, nema više forme:
+
+- „PREUZMI BESPLATAN VODIČ" (hero) → MailerLite stranica
+- „Prijavi se za mentorstvo 1:1" (finalni CTA) → WhatsApp `wa.me`
+
+`Button` sam prepoznaje `href` koji počinje sa `http` i dodaje
+`target="_blank" rel="noreferrer noopener"`.
 
 ### Kartice
 
@@ -105,16 +113,16 @@ jer je osnovni `letter-spacing` za naslove negativan.
 
 ## Poznata stanja / TODO
 
-- Forma za besplatan vodič samo postavlja lokalni state — **nema pravog slanja**.
-- CTA "Prijavi se" je `mailto:` link.
-- Sekcije „O meni", „Forma za vodič" i „Finalni CTA" još imaju zatečen Lovable copy —
-  čeka se novi tekst.
-- `src/assets/transformation-1.jpg`, `transformation-2.jpg`, `ana-portrait.jpg`,
-  `hero-mentor.jpg` i `lifestyle-*.jpg` — deo se više ne koristi.
+- Nav gore desno i dalje ima dugme „Prijavi se" koje vodi na `#prijava` (sidro), dok
+  pravi CTA na dnu vodi na WhatsApp — uskladiti kad se odluči.
+- Finalni CTA još ima zatečen Lovable copy („Tvoja transformacija počinje jednom
+  odlukom…").
+- Logotip u navigaciji piše „Ana — Fitness Coach"; ime u footeru je „Ana Avramović".
+- `src/assets/transformation-*.jpg`, `ana-portrait.jpg`, `hero-mentor.jpg` i
+  `lifestyle-1.jpg` se više ne koriste. `lifestyle-2.jpg` je pozadina finalnog CTA.
 - `ana-cutout.png` je 421 KB; WebP bi to spustio na ~80 KB.
-- Placeholder kontakt: `zdravo@ana-mentorstvo.rs`, Instagram link vodi na `instagram.com`.
 - Nema sekcija: cene/paketi, testimonials, FAQ.
-- Nav ima samo jedan link („O meni") iako sada postoji šest sekcija sa sidrima.
+- Nav ima samo jedan link („O meni") iako sada postoji pet sekcija sa sidrima.
 
 ## Lovable
 
