@@ -91,8 +91,16 @@ Sekcije koriste `id` za anchor navigaciju: `#ana`, `#sta-obuhvata`,
 `SectionHeading` prima i `eyebrow` — sitan nadnaslov sa crticom ispred, koristi ga FAQ.
 
 `OMeni` je predstavljanje odmah ispod hero-a — bez slike, jer je Anina fotografija
-taman iznad. `Pristup` je duža sekcija pri dnu (slika + „Verujem da promena počinje…"),
-nema `id` jer se do nje ne linkuje.
+taman iznad. `Pristup` je duža sekcija pri dnu („Verujem da promena počinje…"), nema
+`id` jer se do nje ne linkuje.
+
+U `Pristup` slike stoje **levo na desktopu, ispod teksta na telefonu**. To radi preko
+`order-1/order-2` klasa, ne preko redosleda u DOM-u — tekst je prvi u markup-u i tako
+treba da ostane (čitači ekrana čitaju naslov pre slike).
+
+`TransformacijeSlider` naizmenično prikazuje dve „pre/posle" fotografije, prelaz je
+`opacity` kroz 1s, smena na 4.5s. Slike su u `object-contain` jer im se odnosi stranica
+razlikuju (1.04 i 0.89) — `object-cover` bi odsekao pola poređenja.
 
 ### Spoljni linkovi
 
@@ -123,10 +131,12 @@ jer je osnovni `letter-spacing` za naslove negativan.
   pravi CTA na dnu vodi na WhatsApp — uskladiti kad se odluči.
 - Finalni CTA još ima zatečen Lovable copy („Tvoja transformacija počinje jednom
   odlukom…").
-- Logotip u navigaciji piše „Ana — Fitness Coach"; ime u footeru je „Ana Avramović".
 - `src/assets/transformation-*.jpg`, `ana-portrait.jpg`, `hero-mentor.jpg` i
   `lifestyle-1.jpg` se više ne koriste. `lifestyle-2.jpg` je pozadina finalnog CTA.
-- `ana-cutout.png` je 421 KB; WebP bi to spustio na ~80 KB.
+- Slike su teške: `transformacija-2.png` 1.6 MB, `ana-cutout.png` 421 KB.
+  WebP bi ih spustio na desetinu — uraditi pre objavljivanja.
+- `transformacija-1.png` je samo 347 px široka, pa je blago meka na desktopu.
+- Favicon je monogram „A" u `public/` (svg + png + ico), generisan, nije Lovable srce.
 - Nema sekcija: cene/paketi, testimonials.
 - FAQ stoji **ispod** finalnog CTA, po izričitom zahtevu — uobičajenije je iznad.
 - Nav ima samo jedan link („O meni") iako sada postoji pet sekcija sa sidrima.

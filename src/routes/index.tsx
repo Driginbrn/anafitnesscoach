@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Plus,
   Minus,
@@ -20,6 +20,8 @@ import {
 
 import anaCutout from "@/assets/ana-cutout.png";
 import lifestyle2 from "@/assets/lifestyle-2.jpg";
+import transformacija1 from "@/assets/transformacija-1.png";
+import transformacija2 from "@/assets/transformacija-2.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -155,7 +157,7 @@ function Nav() {
     <header className="absolute inset-x-0 top-0 z-30">
       <Container className="flex items-center justify-between py-6 md:py-8">
         <a href="#" className="flex items-center gap-2 text-brand-brown">
-          <span className="font-display text-2xl tracking-tight">Ana — Fitness Coach</span>
+          <span className="font-display text-2xl tracking-tight">Ana Avramović</span>
         </a>
         <div className="hidden md:flex items-center gap-8">
           <nav className="flex items-center gap-8 text-sm text-brand-brown/80">
@@ -261,10 +263,26 @@ function OMeni() {
 /* Stil A — svetlo žalfija ikonica, naslov + dopuna. */
 function StaObuhvata() {
   const items = [
-    { icon: Utensils, title: "Individualni plan ishrane", text: "prilagođen tvojim potrebama" },
-    { icon: Trophy, title: "Individualan plan treninga", text: "prema tvojim ciljevima" },
-    { icon: TrendingUp, title: "Praćenje napretka", text: "na nedeljnom nivou i izmene" },
-    { icon: HeartHandshake, title: "Moja podrška", text: "7 dana u nedelji" },
+    {
+      icon: Utensils,
+      title: "Individualni plan ishrane",
+      text: "Sastavljen je prema tvojim potrebama i ciljevima od hrane koju inače voliš. Dobijaš konkretnu namirnicu i konkretnu količinu u planu tako da se ne opterećuješ računanjem. Plan korigujem jednom nedeljno nakon tvog izveštaja i menjam ono što ti je eventualno dosadilo i ubacujem ono što bi želela pazeći da su svi nutrijenti pokriveni.",
+    },
+    {
+      icon: Trophy,
+      title: "Individualni plan treninga",
+      text: "Trening koji je po volumenu, intenzitetu, frekvenciji i odabiru vežbi prilagođen tebi. To znači da trening neće biti isti za tebe i neku drugu osobu. Dobijaš tačan broj ponavljanja, serije, video i objašnjenje za svaku vežbu i po potrebi snimaš svoje treninge kako bih ti ispravila tehniku. Trening periodizujem tako da nema stagnacije.",
+    },
+    {
+      icon: TrendingUp,
+      title: "Praćenje napretka",
+      text: "Ovo je ono što razlikuje bilo koji plan ishrane od mentorstva. Praćenje znači da sam upoznata sa tvojim napretkom i sve korigujem u cilju maksimalnih rezultata. Tvoj napredak najviše zavisi od toga koliko ćeš da mi daješ tačan i iskren feedback i radi se na nedelju dana. Jer na osnovu tvog feedbacka ja radim sve izmene.",
+    },
+    {
+      icon: HeartHandshake,
+      title: "Komunikacija i podrška",
+      text: "Ovo je ono što je tebi zapravo najpotrebnije. Ne još jedan PDF plan sa kojim si bačena u vatru, već moja dostupnost 7 dana u nedelji za pitanja koja imaš. To ne znači da ću da te vučem za ruku da poštuješ plan, već služi tome da ti nekim savetom pomognem da nešto bolje razumeš. To je ono što moje klijentkinje najčešće ističu kao najbolji deo saradnje. Izazova će uvek biti, ali razlika je u tome da li ih prolaziš sama ili sa nekim ko ima znanja i iskustva.",
+    },
     { icon: Pill, title: "Plan suplementacije", text: "po potrebi" },
     { icon: Video, title: "Video materijal", text: "sa pravilnim izvođenjem vežbi" },
   ];
@@ -409,22 +427,48 @@ function ZaKoga() {
   );
 }
 
+/* Naizmenično prikazuje dve fotografije uz prelaz. Slike su „pre/posle" poređenja,
+   pa idu u object-contain — isecanje bi odseklo pola poređenja. */
+function TransformacijeSlider() {
+  const slike = [
+    { src: transformacija1, alt: "Rezultat klijentkinje — pre i posle" },
+    { src: transformacija2, alt: "Rezultat klijentkinje — pre i posle" },
+  ];
+  const [aktivna, setAktivna] = useState(0);
+
+  useEffect(() => {
+    const tajmer = setInterval(() => setAktivna((i) => (i + 1) % slike.length), 4500);
+    return () => clearInterval(tajmer);
+  }, [slike.length]);
+
+  return (
+    <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl bg-brand-cream-deep shadow-elegant">
+      {slike.map((s, i) => (
+        <img
+          key={s.src}
+          src={s.src}
+          alt={s.alt}
+          loading="lazy"
+          aria-hidden={i !== aktivna}
+          className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-1000 ease-in-out ${
+            i === aktivna ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      ))}
+    </div>
+  );
+}
+
 function Pristup() {
   return (
     <section className="py-24 md:py-32">
       <Container>
+        {/* Na telefonu tekst ide prvi, slike ispod. Na desktopu se slike vraćaju levo. */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
-          <div className="lg:col-span-5 flex justify-center">
-            <img
-              src={anaCutout}
-              alt="Ana Avramović — online fitness trener"
-              loading="lazy"
-              width={304}
-              height={1010}
-              className="h-[420px] sm:h-[520px] lg:h-[640px] w-auto"
-            />
+          <div className="order-2 lg:order-1 lg:col-span-5">
+            <TransformacijeSlider />
           </div>
-          <div className="lg:col-span-7">
+          <div className="order-1 lg:order-2 lg:col-span-7">
             <h2 className="text-4xl md:text-5xl text-brand-brown">
               Verujem da <em className="italic text-brand-green">promena</em> počinje iz
               razumevanja, ne iz kazne.
