@@ -499,18 +499,22 @@ function TransformacijeSlider() {
       aria-label="Prikaži sledeću fotografiju"
       className="relative block aspect-[4/5] w-full overflow-hidden rounded-3xl bg-brand-cream-deep shadow-elegant"
     >
-      {slike.map((s, i) => (
-        <img
-          key={s.src}
-          src={s.src}
-          alt={s.alt}
-          loading="lazy"
-          aria-hidden={i !== aktivna}
-          className={`absolute inset-0 h-full w-full object-contain transition-opacity duration-1000 ease-in-out ${
-            i === aktivna ? "opacity-100" : "opacity-0"
-          }`}
-        />
-      ))}
+      {/* Traka sa svim slikama; pomera se u stranu za po jednu širinu okvira. */}
+      <div
+        className="flex h-full w-full transition-transform duration-700 ease-out"
+        style={{ transform: `translateX(-${aktivna * 100}%)` }}
+      >
+        {slike.map((s, i) => (
+          <img
+            key={s.src}
+            src={s.src}
+            alt={s.alt}
+            loading="lazy"
+            aria-hidden={i !== aktivna}
+            className="h-full w-full shrink-0 object-contain"
+          />
+        ))}
+      </div>
     </button>
   );
 }
@@ -683,7 +687,7 @@ function Footer() {
             </a>
           </div>
         </div>
-        <div className="mt-14 flex flex-col gap-4 border-t border-border pt-8 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-16 flex flex-col gap-4 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>© {new Date().getFullYear()} Ana Avramović. Sva prava zadržana.</p>
           <p className="flex items-center gap-2">
             <span>Dizajn i izrada</span>
