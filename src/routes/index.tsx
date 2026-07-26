@@ -7,8 +7,6 @@ import {
   Trophy,
   TrendingUp,
   HeartHandshake,
-  Pill,
-  Video,
   Hourglass,
   Award,
   Target,
@@ -331,14 +329,13 @@ function StaObuhvata() {
       title: "Komunikacija i podrška",
       text: "Ovo je ono što je tebi zapravo najpotrebnije. Ne još jedan PDF plan sa kojim si bačena u vatru, već moja dostupnost 7 dana u nedelji za pitanja koja imaš. To ne znači da ću da te vučem za ruku da poštuješ plan, već služi tome da ti nekim savetom pomognem da nešto bolje razumeš. To je ono što moje klijentkinje najčešće ističu kao najbolji deo saradnje. Izazova će uvek biti, ali razlika je u tome da li ih prolaziš sama ili sa nekim ko ima znanja i iskustva.",
     },
-    { icon: Pill, title: "Plan suplementacije", text: "po potrebi" },
-    { icon: Video, title: "Video materijal", text: "sa pravilnim izvođenjem vežbi" },
   ];
   return (
     <section id="sta-obuhvata" className="py-24 md:py-32 bg-brand-cream-deep/60">
       <Container>
         <SectionHeading caps title="ŠTA OBUHVATA MENTORSTVO?" />
-        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {/* Četiri kartice sa dugačkim tekstom — dve kolone im daju širinu za čitanje. */}
+        <div className="mt-14 grid grid-cols-1 sm:grid-cols-2 gap-5">
           {items.map(({ icon: Icon, title, text }) => (
             <div
               key={title}
