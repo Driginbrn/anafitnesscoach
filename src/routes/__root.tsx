@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { SEO } from "../lib/seo";
 
 function NotFoundComponent() {
   return (
@@ -77,24 +78,32 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Ana — Mentorstvo za zdravlje i mršavljenje" },
-      {
-        name: "description",
-        content:
-          "Individualno mentorstvo za žene: održivo mršavljenje, personalizovana ishrana i trening, nedeljno praćenje i podrška.",
-      },
-      { name: "author", content: "Ana" },
-      { property: "og:title", content: "Ana — Mentorstvo za zdravlje i mršavljenje" },
-      {
-        property: "og:description",
-        content:
-          "Individualno mentorstvo za žene: održivo mršavljenje, personalizovana ishrana i trening.",
-      },
+      { title: SEO.naslov },
+      { name: "description", content: SEO.opis },
+      { name: "author", content: "Ana Avramović" },
+
+      { property: "og:site_name", content: "Ana Avramović — Online fitness trener" },
+      { property: "og:title", content: SEO.naslov },
+      { property: "og:description", content: SEO.opis },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: SEO.sajt },
+      { property: "og:locale", content: "sr_RS" },
+      { property: "og:image", content: `${SEO.sajt}/og-image.jpg` },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      {
+        property: "og:image:alt",
+        content: "Ana Avramović, online fitness trener — mentorstvo za žene",
+      },
+
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: SEO.naslov },
+      { name: "twitter:description", content: SEO.opis },
+      { name: "twitter:image", content: `${SEO.sajt}/og-image.jpg` },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "canonical", href: `${SEO.sajt}/` },
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       { rel: "icon", href: "/favicon-32.png", type: "image/png", sizes: "32x32" },
       { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
@@ -114,7 +123,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="sr-Latn-RS">
       <head>
         <HeadContent />
       </head>

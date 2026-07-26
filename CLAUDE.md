@@ -154,6 +154,38 @@ jer je osnovni `letter-spacing` za naslove negativan.
 - FAQ stoji **ispod** finalnog CTA, po izričitom zahtevu — uobičajenije je iznad.
 - Nav ima samo jedan link („O meni") iako sada postoji pet sekcija sa sidrima.
 
+## Objavljivanje
+
+Sajt je uživo na **https://anafitnesscoach.pages.dev** (Cloudflare Pages).
+
+```sh
+bun run build
+bun x wrangler pages deploy --branch main
+```
+
+`vite.config.ts` zakiva `preset: "cloudflare-pages"` i `compatibilityDate`. **Ne dirati
+taj datum bez razloga** — nitro inače upisuje današnji, a Cloudflare odbija datum
+noviji od svog izdanja runtime-a: deployment prođe, ali Worker vrati 523.
+
+Deploy ume da se prekine posle otpremanja fajlova, pre slanja `_routes.json`. Tada
+novi statički fajlovi vraćaju 404 iako su otpremljeni — pusti `deploy` još jednom.
+Nakon uspešnog deploy-a treba minut da se raširi po mreži.
+
+## SEO
+
+- `src/lib/seo.ts` — naslov, opis i domen na jednom mestu. Menja se samo `sajt` ako
+  se domen promeni; meta tagovi i strukturirani podaci se izvode iz toga.
+- Strukturirani podaci su u komponenti `StrukturiraniPodaci` (`index.tsx`): `WebSite`,
+  `Person`, `Service` sa katalogom usluga, i `FAQPage`. **Sve što tvrde mora da postoji
+  i u vidljivom tekstu stranice** — inače je to skrivanje sadržaja od pretraživača.
+- `faqStavke` je van komponente jer hrani i sekciju i `FAQPage`. Menjaš na jednom mestu.
+- `public/llms.txt` — sažetak sajta u markdown-u, za AI asistente. Držati usklađen sa
+  sadržajem stranice.
+- `public/robots.txt` izričito dozvoljava AI robote (GPTBot, ClaudeBot, PerplexityBot…).
+- `public/og-image.jpg` (1200×630) je generisan `sharp`-om iz `ana-cutout.webp`;
+  skripta nije zadržana, radi se ručno ako zatreba nova.
+- `public/sitemap.xml` ima ručno upisan `lastmod` — ažurirati pri većim izmenama.
+
 ## Lovable
 
 Projekat je generisan i povezan sa [Lovable](https://lovable.dev) (vidi `.lovable/`).

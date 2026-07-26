@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+
+import { SEO } from "@/lib/seo";
 import {
   Plus,
   Minus,
@@ -23,22 +25,7 @@ import transformacija1 from "@/assets/transformacija-1.webp";
 import transformacija2 from "@/assets/transformacija-2.webp";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "Ana — Mentorstvo za zdravlje i mršavljenje" },
-      {
-        name: "description",
-        content:
-          "Individualno mentorstvo za žene koje žele održivo mršavljenje, zdrav životni stil i podršku svake nedelje.",
-      },
-      { property: "og:title", content: "Ana — Mentorstvo za zdravlje i mršavljenje" },
-      {
-        property: "og:description",
-        content:
-          "Individualno mentorstvo za žene: personalizovana ishrana, trening i nedeljno praćenje.",
-      },
-    ],
-  }),
+  /* Naslov i opis dolaze iz SEO konstante u __root.tsx — ovde se ne ponavljaju. */
   component: Index,
 });
 
@@ -582,40 +569,42 @@ function FinalCTA() {
   );
 }
 
+/* Van komponente jer isti sadržaj hrani i sekciju i FAQPage strukturirane podatke. */
+const faqStavke = [
+  {
+    q: "Da li može kućni trening ili u teretani?",
+    a: "Pravim planove i za kućni i za teretanu. Trening u teretani je mnogo bolja opcija jer pruža veću mogućnost napretka. Ako izabereš kućni trening potrebno je kupiti nekoliko tegova i osnovnu opremu.",
+  },
+  {
+    q: "Koliko mi treba vremena za pripremu obroka?",
+    a: "Zapravo u kuhinji ćeš provesti manje vremena nego što si mislila. Obroci su jednostavni i ukusni, možeš ih pripremiti za nekoliko dana unapred. Za pripremu jednog obroka ti je potrebno od 2 do 15 minuta, a ako spremiš za nekoliko dana unapred još i manje.",
+  },
+  {
+    q: "Da li mogu uzeti samo plan ishrane ili treninga?",
+    a: "Postoji opcija i toga, ali je to jednokratni plan koji ne uključuje moje vođenje i praćenje napretka. I naravno cena je niža.",
+  },
+  {
+    q: "Koliko traje mentorstvo?",
+    a: "Mentorstvo traje minimum 4 nedelje, postoji mogućnost plaćanja 2 meseca odjednom i u tom slučaju je cena povoljnija. Mentorstvo nije program koji ima kraj, to je vođenje kroz proces do tvog cilja i nema ograničenja.",
+  },
+  {
+    q: "Kada mogu da vidim napredak?",
+    a: "Napredak je individualna stvar, ali ako poštuješ plan, već posle nedelju dana ćeš osetiti prve promene u energiji i smanjenju nadutosti. Napredak u izgledu se vidi već posle 3-4 nedelje, ali najbolji rezultati dolaze posle 8-12 nedelja kontinuiranog rada.",
+  },
+  {
+    q: "Da li sama računam makrose?",
+    a: "Ne. Od mene dobijaš sve već izračunato i pratiš količine i namirnice koje sam napisala. Ako želiš da neku namirnicu zameniš dobijaš i kalkulator koji ti automatski izračuna kalorije za tu namirnicu koju menjaš.",
+  },
+];
+
 function Faq() {
-  const items = [
-    {
-      q: "Da li može kućni trening ili u teretani?",
-      a: "Pravim planove i za kućni i za teretanu. Trening u teretani je mnogo bolja opcija jer pruža veću mogućnost napretka. Ako izabereš kućni trening potrebno je kupiti nekoliko tegova i osnovnu opremu.",
-    },
-    {
-      q: "Koliko mi treba vremena za pripremu obroka?",
-      a: "Zapravo u kuhinji ćeš provesti manje vremena nego što si mislila. Obroci su jednostavni i ukusni, možeš ih pripremiti za nekoliko dana unapred. Za pripremu jednog obroka ti je potrebno od 2 do 15 minuta, a ako spremiš za nekoliko dana unapred još i manje.",
-    },
-    {
-      q: "Da li mogu uzeti samo plan ishrane ili treninga?",
-      a: "Postoji opcija i toga, ali je to jednokratni plan koji ne uključuje moje vođenje i praćenje napretka. I naravno cena je niža.",
-    },
-    {
-      q: "Koliko traje mentorstvo?",
-      a: "Mentorstvo traje minimum 4 nedelje, postoji mogućnost plaćanja 2 meseca odjednom i u tom slučaju je cena povoljnija. Mentorstvo nije program koji ima kraj, to je vođenje kroz proces do tvog cilja i nema ograničenja.",
-    },
-    {
-      q: "Kada mogu da vidim napredak?",
-      a: "Napredak je individualna stvar, ali ako poštuješ plan, već posle nedelju dana ćeš osetiti prve promene u energiji i smanjenju nadutosti. Napredak u izgledu se vidi već posle 3-4 nedelje, ali najbolji rezultati dolaze posle 8-12 nedelja kontinuiranog rada.",
-    },
-    {
-      q: "Da li sama računam makrose?",
-      a: "Ne. Od mene dobijaš sve već izračunato i pratiš količine i namirnice koje sam napisala. Ako želiš da neku namirnicu zameniš dobijaš i kalkulator koji ti automatski izračuna kalorije za tu namirnicu koju menjaš.",
-    },
-  ];
   const [open, setOpen] = useState<number | null>(0);
   return (
     <section id="pitanja" className="py-24 md:py-32">
       <Container>
         <SectionHeading title="Česta pitanja" />
         <div className="mt-14 max-w-3xl divide-y divide-border border-y border-border">
-          {items.map((it, i) => {
+          {faqStavke.map((it, i) => {
             const isOpen = open === i;
             return (
               <div key={it.q}>
@@ -703,9 +692,134 @@ function Footer() {
   );
 }
 
+/* Strukturirani podaci. Pretraživači i AI asistenti odavde izvlače činjenice —
+   ko je Ana, šta nudi i odgovore na česta pitanja — bez čitanja rasporeda stranice.
+   Sve tvrdnje ovde moraju da postoje i u vidljivom tekstu. */
+function StrukturiraniPodaci() {
+  const graf = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${SEO.sajt}/#sajt`,
+        url: `${SEO.sajt}/`,
+        name: SEO.naslov,
+        description: SEO.opis,
+        inLanguage: "sr-Latn-RS",
+        publisher: { "@id": `${SEO.sajt}/#ana` },
+      },
+      {
+        "@type": "Person",
+        "@id": `${SEO.sajt}/#ana`,
+        name: "Ana Avramović",
+        givenName: "Ana",
+        familyName: "Avramović",
+        jobTitle: "Online fitness trener",
+        url: `${SEO.sajt}/`,
+        email: "mailto:ana.onlinefitnesscoach@gmail.com",
+        image: `${SEO.sajt}/og-image.jpg`,
+        sameAs: ["https://www.instagram.com/ana_fitnesscoach_/"],
+        knowsLanguage: "sr",
+        description:
+          "Online fitness trener sa osam godina iskustva u fitnesu. Vodi žene kroz proces " +
+          "održivog mršavljenja i izgradnje zdravih navika kroz individualno mentorstvo — " +
+          "personalizovan plan ishrane i treninga, nedeljno praćenje napretka i stalnu podršku.",
+        knowsAbout: [
+          "online fitness mentorstvo za žene",
+          "individualni plan ishrane",
+          "individualni plan treninga",
+          "održivo mršavljenje bez dijeta",
+          "izgradnja mišićne mase kod žena",
+          "zdrave navike i promena životnog stila",
+          "hormonski disbalans i ishrana",
+          "praćenje napretka i korekcija plana",
+        ],
+      },
+      {
+        "@type": "Service",
+        "@id": `${SEO.sajt}/#mentorstvo`,
+        name: "Online mentorstvo za žene",
+        serviceType: "Online fitness i nutricionističko mentorstvo",
+        provider: { "@id": `${SEO.sajt}/#ana` },
+        areaServed: { "@type": "Country", name: "Srbija" },
+        availableChannel: {
+          "@type": "ServiceChannel",
+          serviceUrl: `${SEO.sajt}/#prijava`,
+          serviceLocation: { "@type": "VirtualLocation", url: `${SEO.sajt}/` },
+        },
+        audience: {
+          "@type": "Audience",
+          audienceType: "Žene koje žele da smršaju, izgrade mišiće i poprave zdravlje bez dijeta",
+        },
+        description:
+          "Individualno mentorstvo koje traje najmanje četiri nedelje. Obuhvata plan ishrane " +
+          "sastavljen prema tvojim potrebama, plan treninga za kuću ili teretanu, nedeljno " +
+          "praćenje napretka sa korekcijama i podršku sedam dana u nedelji.",
+        hasOfferCatalog: {
+          "@type": "OfferCatalog",
+          name: "Šta obuhvata mentorstvo",
+          itemListElement: [
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Individualni plan ishrane",
+                description:
+                  "Sastavljen prema tvojim potrebama i ciljevima, od hrane koju voliš. " +
+                  "Konkretne namirnice i količine, bez računanja kalorija. Korekcija jednom nedeljno.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Individualni plan treninga",
+                description:
+                  "Prilagođen po volumenu, intenzitetu, frekvenciji i odabiru vežbi. " +
+                  "Za kuću ili teretanu, sa videom i objašnjenjem za svaku vežbu.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Nedeljno praćenje napretka",
+                description:
+                  "Na osnovu tvog nedeljnog izveštaja korigujem ishranu i trening kako ne bi došlo do stagnacije.",
+              },
+            },
+            {
+              "@type": "Offer",
+              itemOffered: {
+                "@type": "Service",
+                name: "Komunikacija i podrška",
+                description: "Dostupnost sedam dana u nedelji za pitanja tokom celog procesa.",
+              },
+            },
+          ],
+        },
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${SEO.sajt}/#pitanja`,
+        mainEntity: faqStavke.map(({ q, a }) => ({
+          "@type": "Question",
+          name: q,
+          acceptedAnswer: { "@type": "Answer", text: a },
+        })),
+      },
+    ],
+  };
+
+  return (
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(graf) }} />
+  );
+}
+
 function Index() {
   return (
     <main className="bg-background text-foreground">
+      <StrukturiraniPodaci />
       <Nav />
       <Hero />
       <OMeni />
