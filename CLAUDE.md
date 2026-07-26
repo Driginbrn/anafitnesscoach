@@ -99,8 +99,20 @@ U `Pristup` slike stoje **levo na desktopu, ispod teksta na telefonu**. To radi 
 treba da ostane (čitači ekrana čitaju naslov pre slike).
 
 `TransformacijeSlider` naizmenično prikazuje dve „pre/posle" fotografije, prelaz je
-`opacity` kroz 1s, smena na 4.5s. Slike su u `object-contain` jer im se odnosi stranica
-razlikuju (1.04 i 0.89) — `object-cover` bi odsekao pola poređenja.
+`opacity` kroz 1s, smena na 4.5s. Klik prelazi na sledeću i resetuje odbrojavanje —
+otud `aktivna` u zavisnostima `useEffect`-a. Ceo okvir je `<button>` radi tastature.
+Slike su u `object-contain` jer im se odnosi stranica razlikuju (1.04 i 0.89) —
+`object-cover` bi odsekao pola poređenja.
+
+### Navigacija
+
+`navLinkovi` je jedan niz iz kog se crtaju i desktop i mobilna verzija — dodaj link
+tamo i pojaviće se na oba mesta. Ispod `md` se prikazuje dugme sa tri linije koje
+otvara panel; klik na stavku ga zatvara.
+
+Zbog toga linkovi postoje **dvaput u DOM-u** (desktop skriven preko `hidden md:flex`).
+Ako pišeš selektor za navigaciju, `querySelector` će uhvatiti skrivenu desktop verziju —
+biraj precizno.
 
 ### Spoljni linkovi
 
@@ -131,11 +143,12 @@ jer je osnovni `letter-spacing` za naslove negativan.
   pravi CTA na dnu vodi na WhatsApp — uskladiti kad se odluči.
 - Finalni CTA još ima zatečen Lovable copy („Tvoja transformacija počinje jednom
   odlukom…").
+- Sve slike u upotrebi su **WebP** (2.3 MB → 227 KB). Konverzija je rađena `sharp`-om
+  koji je posle uklonjen — instalirati ga privremeno (`bun add -d sharp`) ako zatreba
+  opet.
 - `src/assets/transformation-*.jpg`, `ana-portrait.jpg`, `hero-mentor.jpg` i
-  `lifestyle-1.jpg` se više ne koriste. `lifestyle-2.jpg` je pozadina finalnog CTA.
-- Slike su teške: `transformacija-2.png` 1.6 MB, `ana-cutout.png` 421 KB.
-  WebP bi ih spustio na desetinu — uraditi pre objavljivanja.
-- `transformacija-1.png` je samo 347 px široka, pa je blago meka na desktopu.
+  `lifestyle-1.jpg` se **ne koriste nigde** — 444 KB mrtvog tereta, mogu se obrisati.
+- `transformacija-1.webp` je samo 347 px široka, pa je blago meka na desktopu.
 - Favicon je monogram „A" u `public/` (svg + png + ico), generisan, nije Lovable srce.
 - Nema sekcija: cene/paketi, testimonials.
 - FAQ stoji **ispod** finalnog CTA, po izričitom zahtevu — uobičajenije je iznad.

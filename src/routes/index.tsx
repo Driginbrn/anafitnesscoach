@@ -14,14 +14,15 @@ import {
   Target,
   Check,
   X,
+  Menu,
   Instagram,
   Mail,
 } from "lucide-react";
 
-import anaCutout from "@/assets/ana-cutout.png";
-import lifestyle2 from "@/assets/lifestyle-2.jpg";
-import transformacija1 from "@/assets/transformacija-1.png";
-import transformacija2 from "@/assets/transformacija-2.png";
+import anaCutout from "@/assets/ana-cutout.webp";
+import lifestyle2 from "@/assets/lifestyle-2.webp";
+import transformacija1 from "@/assets/transformacija-1.webp";
+import transformacija2 from "@/assets/transformacija-2.webp";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -152,18 +153,31 @@ function Button({
 
 /* ---------- Sections ---------- */
 
+const navLinkovi = [
+  { href: "#ana", label: "O meni" },
+  { href: "#sta-obuhvata", label: "Šta obuhvata" },
+  { href: "#kako-funkcionise", label: "Kako funkcioniše" },
+  { href: "#za-koga", label: "Za koga" },
+  { href: "#pitanja", label: "Pitanja" },
+];
+
 function Nav() {
+  const [otvoren, setOtvoren] = useState(false);
+
   return (
     <header className="absolute inset-x-0 top-0 z-30">
       <Container className="flex items-center justify-between py-6 md:py-8">
         <a href="#" className="flex items-center gap-2 text-brand-brown">
-          <span className="font-display text-2xl tracking-tight">Ana Avramović</span>
+          <span className="font-display text-2xl tracking-tight">Ana — Fitness Coach</span>
         </a>
-        <div className="hidden md:flex items-center gap-8">
-          <nav className="flex items-center gap-8 text-sm text-brand-brown/80">
-            <a href="#ana" className="hover:text-brand-green transition">
-              O meni
-            </a>
+
+        <div className="hidden md:flex items-center gap-7">
+          <nav className="flex items-center gap-6 text-sm text-brand-brown/80">
+            {navLinkovi.map(({ href, label }) => (
+              <a key={href} href={href} className="hover:text-brand-green transition">
+                {label}
+              </a>
+            ))}
           </nav>
           <a
             href="#prijava"
@@ -172,7 +186,41 @@ function Nav() {
             Prijavi se
           </a>
         </div>
+
+        <button
+          type="button"
+          onClick={() => setOtvoren((o) => !o)}
+          aria-expanded={otvoren}
+          aria-label={otvoren ? "Zatvori meni" : "Otvori meni"}
+          className="md:hidden flex h-11 w-11 items-center justify-center rounded-full border border-brand-brown/25 text-brand-brown transition hover:bg-brand-brown hover:text-primary-foreground"
+        >
+          {otvoren ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
       </Container>
+
+      {otvoren && (
+        <Container className="md:hidden pb-4">
+          <nav className="rounded-3xl border border-border bg-card p-2 shadow-elegant">
+            {navLinkovi.map(({ href, label }) => (
+              <a
+                key={href}
+                href={href}
+                onClick={() => setOtvoren(false)}
+                className="block rounded-2xl px-5 py-3.5 text-brand-brown transition hover:bg-brand-green hover:text-white"
+              >
+                {label}
+              </a>
+            ))}
+            <a
+              href="#prijava"
+              onClick={() => setOtvoren(false)}
+              className="mt-1 block rounded-2xl bg-brand-brown px-5 py-3.5 text-center text-sm font-medium text-primary-foreground"
+            >
+              Prijavi se
+            </a>
+          </nav>
+        </Container>
+      )}
     </header>
   );
 }
@@ -435,14 +483,22 @@ function TransformacijeSlider() {
     { src: transformacija2, alt: "Rezultat klijentkinje — pre i posle" },
   ];
   const [aktivna, setAktivna] = useState(0);
+  const sledeca = () => setAktivna((i) => (i + 1) % slike.length);
 
+  /* Zavisnost od `aktivna` znači da klik resetuje odbrojavanje —
+     sledeća smena je puna 4.5s posle, a ne odmah. */
   useEffect(() => {
     const tajmer = setInterval(() => setAktivna((i) => (i + 1) % slike.length), 4500);
     return () => clearInterval(tajmer);
-  }, [slike.length]);
+  }, [aktivna, slike.length]);
 
   return (
-    <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl bg-brand-cream-deep shadow-elegant">
+    <button
+      type="button"
+      onClick={sledeca}
+      aria-label="Prikaži sledeću fotografiju"
+      className="relative block aspect-[4/5] w-full overflow-hidden rounded-3xl bg-brand-cream-deep shadow-elegant"
+    >
       {slike.map((s, i) => (
         <img
           key={s.src}
@@ -455,7 +511,7 @@ function TransformacijeSlider() {
           }`}
         />
       ))}
-    </div>
+    </button>
   );
 }
 
@@ -556,7 +612,7 @@ function Faq() {
   return (
     <section id="pitanja" className="py-24 md:py-32">
       <Container>
-        <SectionHeading eyebrow="Česta pitanja" title="Sve što bi mogla da pitaš." />
+        <SectionHeading title="Česta pitanja" />
         <div className="mt-14 max-w-3xl divide-y divide-border border-y border-border">
           {items.map((it, i) => {
             const isOpen = open === i;
@@ -627,14 +683,19 @@ function Footer() {
             </a>
           </div>
         </div>
-        <div className="mt-14 flex justify-end">
-          <a
-            href="mailto:talicm@icloud.com"
-            aria-label="Izradio M.T — piši mi"
-            className="font-display text-sm tracking-[0.3em] text-brand-brown/45 hover:text-brand-green transition-colors duration-300"
-          >
-            M.T
-          </a>
+        <div className="mt-14 flex flex-col gap-4 border-t border-border pt-8 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} Ana Avramović. Sva prava zadržana.</p>
+          <p className="flex items-center gap-2">
+            <span>Dizajn i izrada</span>
+            <span aria-hidden className="h-px w-5 bg-brand-brown/20" />
+            <a
+              href="mailto:talicm@icloud.com"
+              className="group font-display text-sm tracking-[0.28em] text-brand-brown/70 transition-colors duration-300 hover:text-brand-green"
+            >
+              M.T
+              <span className="block h-px w-0 bg-brand-green transition-all duration-300 group-hover:w-full" />
+            </a>
+          </p>
         </div>
       </Container>
     </footer>
