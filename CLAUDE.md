@@ -81,8 +81,8 @@ redova deluje zbijeno, popuštati `leading`, ne smanjivati font.
 
 Sve sekcije su trenutno u `src/routes/index.tsx`:
 
-Nav → Hero → O meni → Šta obuhvata → Kako funkcioniše → Za koga → Pristup →
-Finalni CTA → Česta pitanja → Footer
+Nav → Hero → Nije još jedan program → O meni → Šta obuhvata → Kako funkcioniše →
+Za koga → Pristup → Finalni CTA → Česta pitanja → Footer
 
 Interne komponente (`Container`, `SectionHeading`, `Button`) su definisane u istom fajlu.
 Sekcije koriste `id` za anchor navigaciju: `#ana`, `#sta-obuhvata`,
@@ -107,8 +107,12 @@ Slike su u `object-contain` jer im se odnosi stranica razlikuju (1.04 i 0.89) �
 ### Navigacija
 
 `navLinkovi` je jedan niz iz kog se crtaju i desktop i mobilna verzija — dodaj link
-tamo i pojaviće se na oba mesta. Ispod `md` se prikazuje dugme sa tri linije koje
+tamo i pojaviće se na oba mesta. Ispod `xl` se prikazuje dugme sa tri linije koje
 otvara panel; klik na stavku ga zatvara.
+
+Prelaz je na **`xl` (1280px)**, ne `md`. Pet punih naslova plus logotip tek tu imaju
+mesta — na 1024px se dodiruju (zazor 0px), pa i tablet i mali laptop dobijaju mobilni
+meni. Ako skraćuješ naslove, prelaz se može spustiti nazad.
 
 Zbog toga linkovi postoje **dvaput u DOM-u** (desktop skriven preko `hidden md:flex`).
 Ako pišeš selektor za navigaciju, `querySelector` će uhvatiti skrivenu desktop verziju —

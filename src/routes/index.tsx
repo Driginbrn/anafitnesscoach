@@ -140,10 +140,10 @@ function Button({
 
 const navLinkovi = [
   { href: "#ana", label: "O meni" },
-  { href: "#sta-obuhvata", label: "Šta obuhvata" },
+  { href: "#sta-obuhvata", label: "Šta obuhvata mentorstvo" },
   { href: "#kako-funkcionise", label: "Kako funkcioniše" },
-  { href: "#za-koga", label: "Za koga" },
-  { href: "#pitanja", label: "Pitanja" },
+  { href: "#za-koga", label: "Za koga je mentorstvo" },
+  { href: "#pitanja", label: "Česta pitanja" },
 ];
 
 function Nav() {
@@ -156,7 +156,9 @@ function Nav() {
           <span className="font-display text-2xl tracking-tight">Ana — Fitness Coach</span>
         </a>
 
-        <div className="hidden md:flex items-center gap-7">
+        {/* Prelaz je na xl, ne md — pet punih naslova plus logotip tek na 1280px
+            imaju dovoljno mesta. Na 1024px se dodiruju, pa tu ide mobilni meni. */}
+        <div className="hidden xl:flex items-center gap-7">
           <nav className="flex items-center gap-6 text-sm text-brand-brown/80">
             {navLinkovi.map(({ href, label }) => (
               <a key={href} href={href} className="hover:text-brand-green transition">
@@ -177,14 +179,14 @@ function Nav() {
           onClick={() => setOtvoren((o) => !o)}
           aria-expanded={otvoren}
           aria-label={otvoren ? "Zatvori meni" : "Otvori meni"}
-          className="md:hidden flex h-11 w-11 items-center justify-center rounded-full border border-brand-brown/25 text-brand-brown transition hover:bg-brand-brown hover:text-primary-foreground"
+          className="xl:hidden flex h-11 w-11 items-center justify-center rounded-full border border-brand-brown/25 text-brand-brown transition hover:bg-brand-brown hover:text-primary-foreground"
         >
           {otvoren ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </Container>
 
       {otvoren && (
-        <Container className="md:hidden pb-4">
+        <Container className="xl:hidden pb-4">
           <nav className="rounded-3xl border border-border bg-card p-2 shadow-elegant">
             {navLinkovi.map(({ href, label }) => (
               <a
@@ -251,6 +253,46 @@ function Hero() {
               />
             </div>
           </div>
+        </div>
+      </Container>
+    </section>
+  );
+}
+
+/* Narativna sekcija izmedju hero-a i predstavljanja. Nema `id` — do nje se ne linkuje. */
+function NijeJosJedanProgram() {
+  const pasusi = [
+    "Kroz moj program ne prolaziš samo kroz plan ishrane – prolaziš kroz transformaciju iz žene koja izbegava ogledalo posle tuširanja jer ne prepoznaje sopstveno telo, u ženu koja stane ispred njega i prvi put posle godina oseti mir umesto stida.",
+    "Iz žene koja svako veče kaže „od ponedeljka počinjem“ u ženu kojoj je trening postao deo dana, kao pranje zuba – ne obaveza, već navika koju voli.",
+    "Vodim te od žene kojoj je hrana izvor stresa i krivice, do žene koja jede sa razumevanjem – zna šta njeno telo treba, i hrani ga sa poštovanjem, ne kaznom.",
+    "Od žene koja nosi široku odeću da sakrije stomak posle porođaja, do žene koja hoda plažom osećajući se sigurnije u svom telu nego ikad pre.",
+    "Ovo je razlika između privremenog rezultata i trajne promene. Između mršavljenja i transformacije koja ostaje.",
+  ];
+
+  return (
+    <section className="py-24 md:py-32 bg-brand-cream-deep/60">
+      <Container>
+        <SectionHeading title="Ovo nije još jedan fitnes program" />
+
+        <p className="mt-6 max-w-3xl text-lg md:text-xl text-brand-brown leading-relaxed">
+          Ovo je put od žene koja se bori sa svojim telom, do žene koja živi u miru sa njim.
+        </p>
+
+        <div className="mt-8 max-w-3xl space-y-5 text-muted-foreground leading-relaxed">
+          {pasusi.map((p) => (
+            <p key={p}>{p}</p>
+          ))}
+          <p>
+            Ako si spremna da postaneš ta druga žena – klikni na dugme{" "}
+            <em className="italic text-brand-green">Prijava</em> da zajedno gradimo put koji traje,
+            ne onaj koji se ponavlja svake godine iznova.
+          </p>
+        </div>
+
+        <div className="mt-10">
+          <Button href="#prijava" variant="primary">
+            PRIJAVA ZA MENTORSTVO 1:1
+          </Button>
         </div>
       </Container>
     </section>
@@ -562,7 +604,7 @@ function FinalCTA() {
                 rel="noreferrer noopener"
                 className="inline-flex items-center gap-2 rounded-full bg-brand-brown px-8 py-4 text-sm font-medium text-primary-foreground transition-all duration-300 hover:-translate-y-0.5 hover:shadow-elegant"
               >
-                Prijavi se za mentorstvo 1:1
+                PRIJAVA ZA MENTORSTVO 1:1
               </a>
             </div>
           </div>
@@ -825,6 +867,7 @@ function Index() {
       <StrukturiraniPodaci />
       <Nav />
       <Hero />
+      <NijeJosJedanProgram />
       <OMeni />
       <StaObuhvata />
       <KakoFunkcionise />
