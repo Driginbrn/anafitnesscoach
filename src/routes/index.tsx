@@ -212,6 +212,24 @@ function Nav() {
   );
 }
 
+/* Anina fotografija u okviru. Stoji na dva mesta u markup-u — u hero-u za desktop
+   i u sekciji „O meni" za telefon — a prikazuje se samo jedna, po širini ekrana.
+   Isti je fajl, pa nema drugog preuzimanja. */
+function AninaSlika({ lazy = false }: { lazy?: boolean }) {
+  return (
+    <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl bg-brand-cream-deep shadow-elegant">
+      <img
+        src={anaCutout}
+        alt="Ana Avramović — online fitness trener"
+        width={304}
+        height={1010}
+        {...(lazy ? { loading: "lazy" as const } : {})}
+        className="h-full w-full object-contain object-bottom"
+      />
+    </div>
+  );
+}
+
 function Hero() {
   return (
     <section className="relative overflow-hidden pt-28 md:pt-32 pb-20 md:pb-28">
@@ -242,16 +260,10 @@ function Hero() {
             </p>
           </div>
 
-          <div className="lg:col-span-6 relative">
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl bg-brand-cream-deep shadow-elegant">
-              <img
-                src={anaCutout}
-                alt="Ana Avramović — online fitness trener"
-                width={304}
-                height={1010}
-                className="h-full w-full object-contain object-bottom"
-              />
-            </div>
+          {/* Ispod lg ova slika se krije — tada je prikazuje sekcija „O meni",
+              gde uz Anino ime ima više smisla. Vidi `AninaSlika`. */}
+          <div className="hidden lg:block lg:col-span-6 relative">
+            <AninaSlika />
           </div>
         </div>
       </Container>
@@ -305,6 +317,11 @@ function OMeni() {
     <section id="ana" className="pt-8 md:pt-10 pb-24 md:pb-32">
       <Container>
         <div className="flex flex-col items-center">
+          {/* Samo do lg — od te širine slika stoji u hero-u. */}
+          <div className="lg:hidden mb-12 w-full max-w-sm">
+            <AninaSlika lazy />
+          </div>
+
           <p className="text-xs uppercase tracking-[0.22em] text-brand-brown/60">O meni</p>
           <h2 className="mt-5 text-4xl md:text-5xl tracking-[0.02em] text-brand-brown text-center">
             ANA AVRAMOVIĆ

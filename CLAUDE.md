@@ -90,9 +90,14 @@ Sekcije koriste `id` za anchor navigaciju: `#ana`, `#sta-obuhvata`,
 
 `SectionHeading` prima i `eyebrow` — sitan nadnaslov sa crticom ispred, koristi ga FAQ.
 
-`OMeni` je predstavljanje odmah ispod hero-a — bez slike, jer je Anina fotografija
-taman iznad. `Pristup` je duža sekcija pri dnu („Verujem da promena počinje…"), nema
-`id` jer se do nje ne linkuje.
+`OMeni` je predstavljanje odmah ispod hero-a. `Pristup` je duža sekcija pri dnu
+(„Verujem da promena počinje…"), nema `id` jer se do nje ne linkuje.
+
+`AninaSlika` stoji **dvaput u markup-u** — u hero-u (`hidden lg:block`) i na vrhu
+sekcije „O meni" (`lg:hidden`). Od `lg` se vidi ona u hero-u, ispod toga ona uz Anino
+ime. Jedan element se ne može premeštati između sekcija samo CSS-om, a slika je isti
+fajl pa se preuzima jednom (provereno u mrežnim zahtevima). Ako menjaš okvir ili
+`alt`, menjaš na jednom mestu — u samoj komponenti.
 
 U `Pristup` slike stoje **levo na desktopu, ispod teksta na telefonu**. To radi preko
 `order-1/order-2` klasa, ne preko redosleda u DOM-u — tekst je prvi u markup-u i tako
