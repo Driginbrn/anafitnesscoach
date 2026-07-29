@@ -153,7 +153,7 @@ function Nav() {
     <header className="absolute inset-x-0 top-0 z-30">
       <Container className="flex items-center justify-between py-6 md:py-8">
         <a href="#" className="flex items-center gap-2 text-brand-brown">
-          <span className="font-display text-2xl tracking-tight">Ana — Fitness Coach</span>
+          <span className="font-display text-2xl tracking-tight">Ana Avramović</span>
         </a>
 
         {/* Prelaz je na xl, ne md — pet punih naslova plus logotip tek na 1280px
