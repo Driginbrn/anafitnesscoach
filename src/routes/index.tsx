@@ -226,7 +226,7 @@ function Hero() {
             </p>
             <div className="mt-9 flex flex-col sm:flex-row gap-3 sm:items-center">
               <Button href="#prijava" variant="primary">
-                PRIJAVI SE ZA MENTORSTVO
+                PRIJAVA ZA MENTORSTVO 1:1
               </Button>
               <Button
                 href="https://preview.mailerlite.io/preview/2485512/sites/191881653543503200/anaavramovic-oczfis"
@@ -235,6 +235,9 @@ function Hero() {
                 PREUZMI BESPLATAN VODIČ
               </Button>
             </div>
+            <p className="mt-5 max-w-lg text-sm md:text-base text-muted-foreground leading-relaxed">
+              Vodič sa 5 razloga zašto ti se stomak ne smanjuje iako jedeš zdravo
+            </p>
           </div>
 
           <div className="lg:col-span-6 relative">
