@@ -167,10 +167,27 @@ jer je osnovni `letter-spacing` za naslove negativan.
 
 Sajt je uživo na **https://anafitnesscoach.pages.dev** (Cloudflare Pages).
 
-```sh
-bun run build
-bun x wrangler pages deploy --branch main
-```
+Objavljivanje ide **preko GitHub-a** — Cloudflare sam gradi i objavljuje na svaki push
+na `main`. Podešavanja projekta u Cloudflare panelu:
+
+| Polje | Vrednost |
+| ----------------------- | --------------- |
+| Framework preset | None |
+| Build command | `bun run build` |
+| Build output directory | `dist` |
+| Root directory | `/` |
+
+Cloudflare sam prepozna Bun po `bun.lock`, ne treba ništa dodatno.
+
+### Zašto ne lokalnim wrangler-om
+
+`wrangler` **pada pod Bun-om** na ovoj mašini: pošalje zahtev ka
+`/pages/projects/…/upload-token`, odgovor nikad ne dođe, proces umre bez greške i sa
+izlaznim kodom 0. Build je ispravan, otpremanje nije. Node.js nije instaliran, a
+wrangler je pisan za Node.
+
+Skripta `bun run deploy` je zadržana i **radiće ako se instalira Node.js**. Do tada
+objavljivanje ide push-om na `main`.
 
 `vite.config.ts` zakiva `preset: "cloudflare-pages"` i `compatibilityDate`. **Ne dirati
 taj datum bez razloga** — nitro inače upisuje današnji, a Cloudflare odbija datum
