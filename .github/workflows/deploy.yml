@@ -1,0 +1,58 @@
+name: Objavi na Cloudflare Pages
+
+# Objavljivanje ide odavde, a ne sa lokalne masine, jer wrangler pada pod Bun-om:
+# posalje zahtev ka Cloudflare API-ju, odgovor nikad ne dodje, proces umre bez
+# greske i sa izlaznim kodom 0. GitHub runner ima Node, pa tu radi ispravno.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # omogucava rucno pokretanje iz Actions taba
+
+concurrency:
+  # Ako se push-ne nekoliko puta u nizu, vazi samo poslednji.
+  group: deploy-pages
+  cancel-in-progress: true
+
+jobs:
+  objavi:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: b25b49ab62ba0e233b740e5948fede84
+      PROJEKAT: anafitnesscoach
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.14
+
+      - name: Instaliraj zavisnosti
+        run: bun install --frozen-lockfile
+
+      - name: Sagradi
+        run: bun run build
+
+      - name: Napravi Pages projekat ako ne postoji
+        # Komanda pukne ako projekat vec postoji, sto je ocekivano i bezopasno —
+        # zato `|| true`. Prvi push posle brisanja projekta ga ovde ponovo stvara.
+        run: npx wrangler pages project create "$PROJEKAT" --production-branch main || true
+
+      - name: Objavi
+        run: npx wrangler pages deploy dist --project-name "$PROJEKAT" --branch main
+
+      - name: Proveri da sajt odgovara
+        run: |
+          for i in $(seq 1 20); do
+            kod=$(curl -s -o /dev/null -w '%{http_code}' "https://$PROJEKAT.pages.dev/")
+            echo "pokusaj $i: HTTP $kod"
+            [ "$kod" = "200" ] && exit 0
+            sleep 10
+          done
+          echo "Sajt ne vraca 200 posle ~200s."
+          exit 1

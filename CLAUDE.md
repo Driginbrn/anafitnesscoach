@@ -167,17 +167,13 @@ jer je osnovni `letter-spacing` za naslove negativan.
 
 Sajt je uživo na **https://anafitnesscoach.pages.dev** (Cloudflare Pages).
 
-Objavljivanje ide **preko GitHub-a** — Cloudflare sam gradi i objavljuje na svaki push
-na `main`. Podešavanja projekta u Cloudflare panelu:
+Objavljivanje ide iz **GitHub Actions** — `.github/workflows/deploy.yml`, pokreće se na
+svaki push na `main` (i ručno iz Actions taba). Workflow gradi, napravi Pages projekat
+ako ne postoji, objavi i na kraju proveri da sajt vraća 200.
 
-| Polje | Vrednost |
-| ----------------------- | --------------- |
-| Framework preset | None |
-| Build command | `bun run build` |
-| Build output directory | `dist` |
-| Root directory | `/` |
-
-Cloudflare sam prepozna Bun po `bun.lock`, ne treba ništa dodatno.
+Repo: `https://github.com/Driginbrn/anafitnesscoach`
+Traži GitHub secret **`CLOUDFLARE_API_TOKEN`** (Cloudflare Pages → Edit).
+Account ID stoji u samom workflow-u — nije tajna.
 
 ### Zašto ne lokalnim wrangler-om
 
@@ -187,7 +183,11 @@ izlaznim kodom 0. Build je ispravan, otpremanje nije. Node.js nije instaliran, a
 wrangler je pisan za Node.
 
 Skripta `bun run deploy` je zadržana i **radiće ako se instalira Node.js**. Do tada
-objavljivanje ide push-om na `main`.
+sve ide push-om.
+
+Cloudflare je ukinuo poseban Pages tok za nove projekte — u panelu se više ne može
+napraviti Pages projekat povezan sa Git-om. Zato ga workflow pravi preko CLI-ja, gde
+ta komanda i dalje postoji.
 
 `vite.config.ts` zakiva `preset: "cloudflare-pages"` i `compatibilityDate`. **Ne dirati
 taj datum bez razloga** — nitro inače upisuje današnji, a Cloudflare odbija datum
