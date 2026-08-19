@@ -86,9 +86,9 @@ Početna (`index.tsx`):
 Nav → Hero → Nije još jedan program → O meni → Šta obuhvata → Kako funkcioniše →
 Za koga → Pristup → Finalni CTA → Česta pitanja → Footer
 
-Druga ruta je `vodic.tsx` (vidi niže).
+To je i jedina ruta — sajt je jedna stranica.
 
-Interne komponente (`Container`, `SectionHeading`, `Button`) su definisane u istom fajlu.
+Interne komponente (`Container`, `SectionHeading`) su definisane u istom fajlu.
 Sekcije koriste `id` za anchor navigaciju: `#ana`, `#sta-obuhvata`,
 `#kako-funkcionise`, `#za-koga`, `#prijava`, `#pitanja`.
 
@@ -129,34 +129,23 @@ biraj precizno.
 
 ### Poziv na akciju
 
-Na početnoj stranici postoji **tačno jedan** — „PRIJAVA ZA MENTORSTVO 1:1" u finalnom
-CTA-u, vodi na WhatsApp. Nema ga u navigaciji, u hero-u, ni u sekcijama. Ako se dodaje
-novi, prvo proveriti da li je to zaista željeno.
+Na sajtu postoji **tačno jedan** — „PRIJAVA ZA MENTORSTVO 1:1" u finalnom CTA-u, vodi
+na WhatsApp. Nema ga u navigaciji, u hero-u, ni u sekcijama. To je namerno; ako se
+dodaje novi, prvo proveriti da li je to zaista željeno.
 
-### Stranica `/vodic`
-
-`src/routes/vodic.tsx` — zasebna stranica za besplatan vodič, vodi na MailerLite.
-Do nje se dolazi **samo preko direktnog linka**; sa početne ne vodi nijedan link i to
-je namerno. Zato nosi `noindex, nofollow` i nije u `sitemap.xml`.
-
-Ako se poželi da bude pretraživa: skloniti `robots` meta tag i dodati je u sitemap.
-
-### Zajedničke komponente
-
-`Container` i `Button` su u `src/components/sajt.tsx` jer ih koriste obe rute.
-Sekcije i `SectionHeading` ostaju u `index.tsx`.
-
-`Button` sam prepoznaje `href` koji počinje sa `http` i dodaje
-`target="_blank" rel="noreferrer noopener"`.
+Vodič sa MailerLite-a je **uklonjen sa sajta** — postojao je kao dugme u hero-u, pa
+kratko i kao zasebna stranica `/vodic`. Ako se ikad vraća, kod je u istoriji
+(commit `fd397c5`), a link je u istom commit-u.
 
 ### Meta tagovi po rutama
 
 `__root.tsx` drži **samo ono što važi za ceo sajt** (charset, viewport, `og:site_name`,
 `og:type`, `og:locale`, favicon, fontovi). Naslov, opis, `canonical`, `og:url`,
-`og:title`, `og:image` postavlja **svaka ruta za sebe**.
+`og:title`, `og:image` postavlja **ruta**.
 
 Ovo nije stilska odluka: TanStack spaja root i rutu, pa bi tagovi iz roota dali
-**dva canonical taga** na podstranici — što pretraživači odbacuju.
+**dva canonical taga** na svakoj podstranici — što pretraživači odbacuju. Trenutno
+postoji samo jedna ruta, ali podela je tu da se problem ne vrati sa sledećom.
 
 ### Kartice
 

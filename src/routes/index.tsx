@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
 import { SEO } from "@/lib/seo";
-import { Container } from "@/components/sajt";
 import {
   Plus,
   Minus,
@@ -48,6 +47,16 @@ export const Route = createFileRoute("/")({
 });
 
 /* ---------- Reusable primitives ---------- */
+
+function Container({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return <div className={`mx-auto w-full max-w-6xl px-6 md:px-10 ${className}`}>{children}</div>;
+}
 
 function SectionHeading({
   title,
