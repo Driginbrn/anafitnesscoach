@@ -75,35 +75,22 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
+    /* Ovde stoji samo ono što važi za ceo sajt. Naslov, opis, canonical i og:*
+       postavlja svaka ruta za sebe — inače bi se root i ruta udvostručili i
+       stranica bi imala dva canonical taga, što pretraživači odbacuju. */
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: SEO.naslov },
-      { name: "description", content: SEO.opis },
       { name: "author", content: "Ana Avramović" },
-
       { property: "og:site_name", content: "Ana Avramović — Online fitness trener" },
-      { property: "og:title", content: SEO.naslov },
-      { property: "og:description", content: SEO.opis },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: SEO.sajt },
       { property: "og:locale", content: "sr_RS" },
-      { property: "og:image", content: `${SEO.sajt}/og-image.jpg` },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      {
-        property: "og:image:alt",
-        content: "Ana Avramović, online fitness trener — mentorstvo za žene",
-      },
-
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: SEO.naslov },
-      { name: "twitter:description", content: SEO.opis },
-      { name: "twitter:image", content: `${SEO.sajt}/og-image.jpg` },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "canonical", href: `${SEO.sajt}/` },
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       { rel: "icon", href: "/favicon-32.png", type: "image/png", sizes: "32x32" },
       { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },

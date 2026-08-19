@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
 import { SEO } from "@/lib/seo";
+import { Container } from "@/components/sajt";
 import {
   Plus,
   Minus,
@@ -25,21 +26,28 @@ import transformacija1 from "@/assets/transformacija-1.webp";
 import transformacija2 from "@/assets/transformacija-2.webp";
 
 export const Route = createFileRoute("/")({
-  /* Naslov i opis dolaze iz SEO konstante u __root.tsx — ovde se ne ponavljaju. */
+  head: () => ({
+    meta: [
+      { title: SEO.naslov },
+      { name: "description", content: SEO.opis },
+      { property: "og:title", content: SEO.naslov },
+      { property: "og:description", content: SEO.opis },
+      { property: "og:url", content: `${SEO.sajt}/` },
+      { property: "og:image", content: `${SEO.sajt}/og-image.jpg` },
+      {
+        property: "og:image:alt",
+        content: "Ana Avramović, online fitness trener — mentorstvo za žene",
+      },
+      { name: "twitter:title", content: SEO.naslov },
+      { name: "twitter:description", content: SEO.opis },
+      { name: "twitter:image", content: `${SEO.sajt}/og-image.jpg` },
+    ],
+    links: [{ rel: "canonical", href: `${SEO.sajt}/` }],
+  }),
   component: Index,
 });
 
 /* ---------- Reusable primitives ---------- */
-
-function Container({
-  children,
-  className = "",
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return <div className={`mx-auto w-full max-w-6xl px-6 md:px-10 ${className}`}>{children}</div>;
-}
 
 function SectionHeading({
   title,
@@ -86,56 +94,6 @@ const cardHover =
 
 const fadeToWhite = "transition-colors duration-500 group-hover:text-white";
 
-type BtnProps = {
-  children: React.ReactNode;
-  href?: string;
-  variant?: "primary" | "ghost" | "outline" | "terracotta";
-  className?: string;
-  onClick?: () => void;
-  type?: "button" | "submit";
-};
-
-function Button({
-  children,
-  href,
-  variant = "primary",
-  className = "",
-  onClick,
-  type = "button",
-}: BtnProps) {
-  const base =
-    "inline-flex items-center justify-center gap-2 rounded-full px-7 py-3.5 text-sm font-medium tracking-wide transition-all duration-300 will-change-transform";
-  const styles: Record<string, string> = {
-    primary:
-      "bg-brand-green text-primary-foreground shadow-soft hover:shadow-elegant hover:-translate-y-0.5",
-    outline:
-      "border border-brand-brown/20 text-brand-brown hover:bg-brand-brown/5 hover:border-brand-brown/40",
-    /* Terakota je svetla — beo tekst na njoj pada na ~2.7:1, pa ide braon (~5:1). */
-    terracotta:
-      "bg-brand-terracotta text-brand-brown shadow-soft hover:shadow-elegant hover:-translate-y-0.5",
-    ghost: "text-brand-brown hover:text-brand-green",
-  };
-  const cls = `${base} ${styles[variant]} ${className}`;
-  if (href) {
-    /* Spoljni linkovi se otvaraju u novom tabu da posetilac ne izgubi stranicu. */
-    const spoljni = href.startsWith("http");
-    return (
-      <a
-        href={href}
-        className={cls}
-        {...(spoljni ? { target: "_blank", rel: "noreferrer noopener" } : {})}
-      >
-        {children}
-      </a>
-    );
-  }
-  return (
-    <button type={type} onClick={onClick} className={cls}>
-      {children}
-    </button>
-  );
-}
-
 /* ---------- Sections ---------- */
 
 const navLinkovi = [
@@ -166,12 +124,6 @@ function Nav() {
               </a>
             ))}
           </nav>
-          <a
-            href="#prijava"
-            className="inline-flex items-center gap-2 rounded-full border border-brand-brown/25 px-5 py-2 text-sm text-brand-brown hover:bg-brand-brown hover:text-primary-foreground transition"
-          >
-            Prijavi se
-          </a>
         </div>
 
         <button
@@ -198,13 +150,6 @@ function Nav() {
                 {label}
               </a>
             ))}
-            <a
-              href="#prijava"
-              onClick={() => setOtvoren(false)}
-              className="mt-1 block rounded-2xl bg-brand-brown px-5 py-3.5 text-center text-sm font-medium text-primary-foreground"
-            >
-              Prijavi se
-            </a>
           </nav>
         </Container>
       )}
@@ -244,20 +189,6 @@ function Hero() {
               Vodim žene kroz proces održivog mršavljenja i izgradnje zdravih navika — bez dijeta i
               jojo efekta.
             </p>
-            <div className="mt-9 flex flex-col sm:flex-row gap-3 sm:items-center">
-              <Button href="#prijava" variant="primary">
-                PRIJAVA ZA MENTORSTVO 1:1
-              </Button>
-              <Button
-                href="https://preview.mailerlite.io/preview/2485512/sites/191881653543503200/anaavramovic-oczfis"
-                variant="terracotta"
-              >
-                PREUZMI BESPLATAN VODIČ
-              </Button>
-            </div>
-            <p className="mt-5 max-w-lg text-sm md:text-base text-muted-foreground leading-relaxed">
-              Vodič sa 5 razloga zašto ti se stomak ne smanjuje iako jedeš zdravo
-            </p>
           </div>
 
           {/* Ispod lg ova slika se krije — tada je prikazuje sekcija „O meni",
@@ -295,16 +226,9 @@ function NijeJosJedanProgram() {
             <p key={p}>{p}</p>
           ))}
           <p>
-            Ako si spremna da postaneš ta druga žena – klikni na dugme{" "}
-            <em className="italic text-brand-green">Prijava</em> da zajedno gradimo put koji traje,
-            ne onaj koji se ponavlja svake godine iznova.
+            Ako si spremna da postaneš ta druga žena, hajde da zajedno gradimo put koji traje, ne
+            onaj koji se ponavlja svake godine iznova.
           </p>
-        </div>
-
-        <div className="mt-10">
-          <Button href="#prijava" variant="primary">
-            PRIJAVA ZA MENTORSTVO 1:1
-          </Button>
         </div>
       </Container>
     </section>
